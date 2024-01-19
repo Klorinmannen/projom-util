@@ -1,6 +1,6 @@
 {
-    "name": "klorinmannen/projom",
-    "description": "Projom http module",
+    "name": "klorinmannen/projom-util",
+    "description": "Projom util module",
     "autoload": {
         "psr-4": {
             "Projom\\": "src/"
@@ -13,14 +13,5 @@
     ],
     "require-dev": {
 		"phpunit/phpunit": "*"
-    },
-    "require": {
-        "vendor/projom": "dev-master"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "git@github.com:Klorinmannen/projom-util.git"
-        }
-    ]
+    }
 }
