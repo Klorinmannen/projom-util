@@ -6,12 +6,9 @@
 !README.md
 !composer.json
 !composer.lock
-!phpunit.xml
 
 # White-list entire directories.
 !src/
-!tests/
-!.github/
 
 # Ignore crap files.
 **/*.*~
