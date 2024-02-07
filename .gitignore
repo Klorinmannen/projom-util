@@ -3,12 +3,16 @@
 
 # White-list files.
 !.gitignore
+!.gitattributes
 !README.md
 !composer.json
 !composer.lock
+!phpunit.xml
+!phpunit_coverage.txt
 
 # White-list entire directories.
 !src/
+!tests/
 
 # Ignore crap files.
 **/*.*~

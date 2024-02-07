@@ -1,0 +1,44 @@
+
+
+Code Coverage Report:      
+  2024-02-07 12:09:27      
+                           
+ Summary:                  
+  Classes: 63.16% (12/19)  
+  Methods: 78.33% (47/60)  
+  Lines:   88.05% (258/293)
+
+Projom\Util\Base64
+  Methods: 100.00% ( 6/ 6)   Lines: 100.00% ( 12/ 12)
+Projom\Util\Bools
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  6/  6)
+Projom\Util\Dir
+  Methods:  60.00% ( 3/ 5)   Lines:  90.62% ( 29/ 32)
+Projom\Util\File
+  Methods:  77.78% ( 7/ 9)   Lines:  92.86% ( 39/ 42)
+Projom\Util\File\Read
+  Methods:  50.00% ( 1/ 2)   Lines:  90.91% ( 10/ 11)
+Projom\Util\File\Write
+  Methods: 100.00% ( 3/ 3)   Lines: 100.00% ( 14/ 14)
+Projom\Util\Floats
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  3/  3)
+Projom\Util\Integers
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  6/  6)
+Projom\Util\Json
+  Methods: 100.00% ( 5/ 5)   Lines: 100.00% ( 38/ 38)
+Projom\Util\Math
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
+Projom\Util\Math\Expression
+  Methods:  80.00% ( 4/ 5)   Lines:  97.92% ( 47/ 48)
+Projom\Util\Random
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  4/  4)
+Projom\Util\Strings
+  Methods: 100.00% ( 3/ 3)   Lines: 100.00% (  8/  8)
+Projom\Util\Template
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  5/  5)
+Projom\Util\Validate
+  Methods: 100.00% ( 5/ 5)   Lines: 100.00% ( 11/ 11)
+Projom\Util\Xml
+  Methods:  50.00% ( 1/ 2)   Lines:  95.00% ( 19/ 20)
+Projom\Util\Yaml
+  Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  6/  6)

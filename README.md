@@ -1,2 +1,1 @@
-# projom-util
-Projom util module
+# Projom util module
