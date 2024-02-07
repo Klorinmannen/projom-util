@@ -1,6 +1,7 @@
 {
     "name": "klorinmannen/projom-util",
     "description": "Projom util module",
+    "type": "library",
     "autoload": {
         "psr-4": {
             "Projom\\": "src/"
