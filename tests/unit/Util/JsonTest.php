@@ -36,9 +36,9 @@ class JsonTest extends TestCase
 	}
 
 	#[DataProvider('provider_test_parseFile')]
-	public function test_parseFile(string $fullFilepath, array $expected): void
+	public function test_parseFile(string $fullFilePath, array $expected): void
 	{
-		$this->assertEquals($expected, Json::parseFile($fullFilepath));
+		$this->assertEquals($expected, Json::parseFile($fullFilePath));
 	}
 
 	public static function provider_test_verifyAndDecode(): array

@@ -107,8 +107,8 @@ class DirTest extends TestCase
 	}
 	
 	#[DataProvider('provider_test_prependFullDirPath')]
-	public function test_prependFullDirPath(string $fillDirPath, array $fileList, array $expected): void
+	public function test_prependFullDirPath(string $fullDirPath, array $fileList, array $expected): void
 	{
-		$this->assertEquals($expected, Dir::prependfullDirPath($fillDirPath, $fileList));
+		$this->assertEquals($expected, Dir::prependfullDirPath($fullDirPath, $fileList));
 	}
 }
