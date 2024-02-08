@@ -30,7 +30,7 @@ jobs:
         uses: php-actions/composer@v6
 
       - name: Run coverage report
-        run: ./vendor/bin/phpunit --coverage-text > "coverage.txt"
+        run: ./vendor/bin/phpunit --coverage-text="phpunit_coverage.txt"
 
       - name: Coverage summary
-        run: cat coverage.txt >> $GITHUB_STEP_SUMMARY
+        run: cat phpunit_coverage.txt >> $GITHUB_STEP_SUMMARY
