@@ -1,12 +1,12 @@
 
 
 Code Coverage Report:      
-  2024-02-08 20:00:11      
+  2024-04-11 19:40:47      
                            
  Summary:                  
-  Classes: 63.16% (12/19)  
-  Methods: 78.33% (47/60)  
-  Lines:   88.05% (258/293)
+  Classes: 64.71% (11/17)  
+  Methods: 79.66% (47/59)  
+  Lines:   87.99% (249/283)
 
 Projom\Util\Base64
   Methods: 100.00% ( 6/ 6)   Lines: 100.00% ( 12/ 12)
@@ -15,11 +15,7 @@ Projom\Util\Bools
 Projom\Util\Dir
   Methods:  60.00% ( 3/ 5)   Lines:  90.62% ( 29/ 32)
 Projom\Util\File
-  Methods:  77.78% ( 7/ 9)   Lines:  92.86% ( 39/ 42)
-Projom\Util\File\Read
-  Methods:  50.00% ( 1/ 2)   Lines:  90.91% ( 10/ 11)
-Projom\Util\File\Write
-  Methods: 100.00% ( 3/ 3)   Lines: 100.00% ( 14/ 14)
+  Methods:  84.62% (11/13)   Lines:  94.74% ( 54/ 57)
 Projom\Util\Floats
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  3/  3)
 Projom\Util\Integers

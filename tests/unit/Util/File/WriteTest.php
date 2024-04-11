@@ -7,7 +7,7 @@ namespace Projom\Tests\Unit\Util\File;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Util\File\Write;
+use Projom\Util\File;
 
 class WriteTest extends TestCase
 {
@@ -17,30 +17,30 @@ class WriteTest extends TestCase
 			[
 				'fullFilePath' => '',
 				'data' => '',
-				'expected' => null
+				'expected' => false
 			],
 			[
 				'fullFilePath' => __DIR__ . '/write_test.txt',
 				'data' => 'Some string',
-				'expected' => 11
+				'expected' => true
 			],
 			[
 				'fullFilePath' => __DIR__ . '/write_test.txt',
 				'data' => '',
-				'expected' => 0
+				'expected' => true
 			],
 			[
 				'fullFilePath' => __DIR__ . '/write_test.txt',
 				'data' => [ 'Some', 'data' ],
-				'expected' => 8
+				'expected' => true
 			]
 		];
 	}
 	
 	#[DataProvider('provider_test_file')]
-	public function test_create(string $fullFilePath, mixed $data, ?int $expected): void
+	public function test_create(string $fullFilePath, mixed $data, bool $expected): void
 	{
-		$this->assertEquals($expected, Write::file($fullFilePath, $data));
+		$this->assertEquals($expected, File::write($fullFilePath, $data));
 	}
 
 	public static function provider_test_appendFile(): array
@@ -49,30 +49,30 @@ class WriteTest extends TestCase
 			[
 				'fullFilePath' => '',
 				'data' => 'Some string',
-				'expected' => null
+				'expected' => false
 			],
 			[
 				'fullFilePath' => __DIR__ . '/dir/this_file_does_not_exist.txt',
 				'data' => 'Some string',
-				'expected' => null
+				'expected' => false
 			],
 			[
 				'fullFilePath' => __DIR__ . '/write_test.txt',
 				'data' => 'Some string',
-				'expected' => 11
+				'expected' => true
 			],
 			[
 				'fullFilePath' => __DIR__ . '/write_test.txt',
 				'data' => [ 'Some', 'data' ],
-				'expected' => 8
+				'expected' => true
 			]
 		];
 	}
 	
 	#[DataProvider('provider_test_appendFile')]
-	public function test_append(string $fullFilePath, mixed $data, ?int $expected): void
+	public function test_append(string $fullFilePath, mixed $data, bool $expected): void
 	{
-		$this->assertEquals($expected, Write::appendFile($fullFilePath, $data));
+		$this->assertEquals($expected, File::appendFile($fullFilePath, $data));
 	}
 
 	public static function provider_test_verifyFullFilePath(): array
@@ -96,6 +96,6 @@ class WriteTest extends TestCase
 	#[DataProvider('provider_test_verifyFullFilePath')]
 	public function test_verifyFullFilePath(string $fullFilePath, bool $expected): void
 	{
-		$this->assertEquals($expected, Write::verifyFullFilePath($fullFilePath));
+		$this->assertEquals($expected, File::isWriteable($fullFilePath));
 	}
 }

@@ -7,7 +7,7 @@ namespace Projom\Tests\Unit\Util\File;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-use Projom\Util\File\Read;
+use Projom\Util\File;
 
 class ReadTest extends TestCase
 {
@@ -32,7 +32,7 @@ class ReadTest extends TestCase
 	#[DataProvider('provider_test_file')]
 	public function test_file(string $fullFilePath, ?string $expected): void
 	{
-		$this->assertEquals($expected, Read::file($fullFilePath));
+		$this->assertEquals($expected, File::read($fullFilePath));
 	}
 
 	public static function provider_test_verifyFullFilePath(): array
@@ -56,6 +56,6 @@ class ReadTest extends TestCase
 	#[DataProvider('provider_test_verifyFullFilePath')]
 	public function test_verifyFullFilePath(string $fullFilePath, bool $expected): void
 	{
-		$this->assertEquals($expected, Read::verifyFullFilePath($fullFilePath));
+		$this->assertEquals($expected, File::isReadable($fullFilePath));
 	}
 }
