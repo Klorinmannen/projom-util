@@ -4,12 +4,55 @@ declare(strict_types=1);
 
 namespace Projom\Util;
 
-use Projom\Util\File\Read;
 use Projom\Util\Json;
 use Projom\Util\Yaml;
 
 class File
 {
+    public static function write(
+        string $fullFilePath,
+        mixed $data
+    ): bool {
+
+        if (!static::isWriteable($fullFilePath))
+            return false;
+
+        file_put_contents($fullFilePath, $data, LOCK_EX);
+
+        return true;
+    }
+
+    public static function isWriteable(string $fullFilePath): bool
+    {
+        $dir = dirname($fullFilePath);
+        
+        if (!is_dir($dir))
+            return false;
+
+        return is_writeable($dir);
+    }
+
+    public static function appendFile(
+        string $fullFilePath,
+        mixed $data
+    ): bool {
+
+        if (!static::isReadable($fullFilePath))
+            return false;
+
+        file_put_contents($fullFilePath, $data, LOCK_EX | FILE_APPEND);
+
+        return true;
+    }
+
+    public static function read(string $fullFilePath): string|null
+    {
+        if (!static::isReadable($fullFilePath))
+            return null;
+
+        return file_get_contents($fullFilePath);
+    }
+
     public static function isReadable(string $fullFilePath): bool
     {
         if (!file_exists($fullFilePath))
@@ -75,7 +118,7 @@ class File
                 return Yaml::parseFile($fullFilePath);
 
             case 'txt':
-                return [ Read::file($fullFilePath) ];
+                return [static::read($fullFilePath)];
 
             default:
                 error_log("Unknown file extension: $extension");

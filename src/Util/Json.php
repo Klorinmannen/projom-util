@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Projom\Util;
 
-use Projom\Util\File\Read;
+use Projom\Util\File;
 
 class Json
 {
@@ -13,7 +13,7 @@ class Json
         if (!$fullFilePath)
             return [];
 
-        if (!$json = Read::file($fullFilePath))
+        if (!$json = File::read($fullFilePath))
             return [];
        
         if (!$decoded = static::verifyAndDecode($json))

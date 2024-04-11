@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Projom\Util;
 
-use Projom\Util\File\Read;
+use Projom\Util\File;
 
 class Yaml
 {
@@ -13,7 +13,7 @@ class Yaml
         if (!$fullFilePath)
             return [];
 
-        if (!$yaml = Read::file($fullFilePath))
+        if (!$yaml = File::read($fullFilePath))
             return [];
 
         $decoded = yaml_parse($yaml);
