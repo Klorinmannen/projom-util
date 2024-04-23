@@ -66,6 +66,6 @@ class MathTest extends TestCase
     #[DataProvider('provider_test_isSubset')]
     public function test_isSubset(array $subset, array $superset, bool $expected): void
     {
-        $this->assertEquals($expected, Math::isSubset($subset, $superset));
+        $this->assertEquals($expected, Math::isSubsetKey($subset, $superset));
     }
 }
