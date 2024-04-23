@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Projom\Util;
 
 use Projom\Util\File;
+use SebastianBergmann\Type\NullType;
 
 class Json
 {
@@ -15,7 +16,7 @@ class Json
 
         if (!$json = File::read($fullFilePath))
             return [];
-       
+
         if (!$decoded = static::verifyAndDecode($json))
             return [];
 
@@ -37,11 +38,8 @@ class Json
         return static::decode($jsonString, $asArray);
     }
 
-    public static function decode(
-        string $jsonString,
-        bool $asArray = true
-    ): ?array {
-
+    public static function decode(string $jsonString, bool $asArray = true): array|null
+    {
         if (!$jsonString)
             return null;
 
@@ -54,31 +52,15 @@ class Json
 
     public static function verify(string $jsonString): bool
     {
-        // Quick cheap dummy checks.
-        if (strlen($jsonString) < 2)
-            return false;
-       
-        if (strpos($jsonString, '{', 0) === false 
-            && strpos($jsonString, '[', 0) === false)
-            return false;
-        
-        if (strpos($jsonString, '}', -1) === false
-            && strpos($jsonString, ']', -1) === false)
+        if (!$jsonString)
             return false;
 
-        // The only real way to properly check is by decoding.
         static::decode($jsonString);
-        if (json_last_error() != JSON_ERROR_NONE)
-            return false;
-
-        return true;
+        return json_last_error() === JSON_ERROR_NONE;
     }
 
-    public static function encode(
-        array $toEncode,
-        bool $prettyPrint = false
-    ): ?string {
-
+    public static function encode(array $toEncode, bool $prettyPrint = false): string|null
+    {
         $flags = 0;
         if ($prettyPrint)
             $flags = JSON_PRETTY_PRINT;
