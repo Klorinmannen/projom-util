@@ -17,7 +17,7 @@ class Strings
     }
 
     public static function matchTextPattern(string $subject): bool
-    {            
+    {
         $pattern = static::TEXT_PATTERN;
         $match = preg_match($pattern, $subject) === 1;
         return $match;

@@ -40,7 +40,7 @@ class Base64
     }
 
     public static function decodeUrlCharacters(string $string): string
-    {   
+    {
         return str_replace(['-', '_'], ['+', '/'], $string);
     }
 }
