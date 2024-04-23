@@ -23,10 +23,6 @@ class Dir
         return $systemDir;
     }
 
-    /* 
-        Availability to make method recursive by
-        adding a parameter ($recursive = false).
-    */
     public static function parse(string $fullDirPath): array
     {
         $readable = Dir::isReadable($fullDirPath);
@@ -68,10 +64,8 @@ class Dir
         return array_diff($fileList, $unwanted);
     }
 
-    public static function prependfullDirPath(
-        string $fullDirPath,
-        array $fileList
-    ): array {
+    public static function prependfullDirPath(string $fullDirPath, array $fileList): array 
+    {
         return array_map(fn ($file) => $fullDirPath . DIRECTORY_SEPARATOR . $file, $fileList);
     }
 }

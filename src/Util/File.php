@@ -9,11 +9,8 @@ use Projom\Util\Yaml;
 
 class File
 {
-    public static function write(
-        string $fullFilePath,
-        mixed $data
-    ): bool {
-
+    public static function write(string $fullFilePath, mixed $data): bool 
+    {
         if (!static::isWriteable($fullFilePath))
             return false;
 
@@ -25,18 +22,15 @@ class File
     public static function isWriteable(string $fullFilePath): bool
     {
         $dir = dirname($fullFilePath);
-        
+
         if (!is_dir($dir))
             return false;
 
         return is_writeable($dir);
     }
 
-    public static function appendFile(
-        string $fullFilePath,
-        mixed $data
-    ): bool {
-
+    public static function appendFile(string $fullFilePath, mixed $data): bool 
+    {
         if (!static::isReadable($fullFilePath))
             return false;
 
@@ -109,22 +103,12 @@ class File
         $fileNameExt = File::fullName($fullFilePath);
         $extension = File::extension($fileNameExt);
 
-        switch ($extension) {
-            case 'json':
-                return Json::parseFile($fullFilePath);
-
-            case 'yml':
-            case 'yaml':
-                return Yaml::parseFile($fullFilePath);
-
-            case 'txt':
-                return [static::read($fullFilePath)];
-
-            default:
-                error_log("Unknown file extension: $extension");
-        }
-
-        return [];
+        return match ($extension) {
+            'json' => Json::parseFile($fullFilePath),
+            'yml', 'yaml' => Yaml::parseFile($fullFilePath),
+            'txt' => [static::read($fullFilePath)],
+            default => throw new \Exception("File extension: $extension is not supported", 400),
+        };
     }
 
     public static function parseList(array $fileList): array
