@@ -1,12 +1,12 @@
 
 
 Code Coverage Report:      
-  2024-04-11 19:40:47      
+  2024-04-23 10:44:59      
                            
  Summary:                  
   Classes: 64.71% (11/17)  
-  Methods: 79.66% (47/59)  
-  Lines:   87.99% (249/283)
+  Methods: 81.36% (48/59)  
+  Lines:   88.24% (240/272)
 
 Projom\Util\Base64
   Methods: 100.00% ( 6/ 6)   Lines: 100.00% ( 12/ 12)
@@ -15,13 +15,13 @@ Projom\Util\Bools
 Projom\Util\Dir
   Methods:  60.00% ( 3/ 5)   Lines:  90.62% ( 29/ 32)
 Projom\Util\File
-  Methods:  84.62% (11/13)   Lines:  94.74% ( 54/ 57)
+  Methods:  92.31% (12/13)   Lines:  98.15% ( 53/ 54)
 Projom\Util\Floats
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  3/  3)
 Projom\Util\Integers
   Methods: 100.00% ( 2/ 2)   Lines: 100.00% (  6/  6)
 Projom\Util\Json
-  Methods: 100.00% ( 5/ 5)   Lines: 100.00% ( 38/ 38)
+  Methods: 100.00% ( 5/ 5)   Lines: 100.00% ( 30/ 30)
 Projom\Util\Math
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  1/  1)
 Projom\Util\Math\Expression
