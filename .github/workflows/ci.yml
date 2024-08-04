@@ -6,7 +6,7 @@ permissions:
   contents: read
 
 jobs:
-  test_suite:
+  unit-tests:
     name: Test on php ${{ matrix.php_version }} and ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
