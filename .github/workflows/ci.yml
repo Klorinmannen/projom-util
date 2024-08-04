@@ -1,4 +1,4 @@
-name: PHPUnit
+name: CI
 
 on: [push]
 
@@ -22,12 +22,12 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.2"
-          extensions: "yaml, mbstring, pdo_mysql, openssl, curl"
-          coverage: "xdebug"
-          tools: none
+          extensions: mbstring, yaml, pdo_mysql, openssl, curl
+          coverage: xdebug
+          tools: composer
 
-      - name: Install PHPUnit with Composer
-        uses: php-actions/composer@v6
+      - name: Install dependencies
+        run: composer install
 
       - name: Run coverage report
         run: ./vendor/bin/phpunit --coverage-text="phpunit_coverage.txt"
