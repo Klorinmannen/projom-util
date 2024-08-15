@@ -9,7 +9,9 @@ use Projom\Util\Yaml;
 
 class File
 {
-    public static function write(string $fullFilePath, mixed $data): bool 
+    private array $cache = [];
+
+    public static function write(string $fullFilePath, mixed $data): bool
     {
         if (!static::isWriteable($fullFilePath))
             return false;
@@ -29,7 +31,7 @@ class File
         return is_writeable($dir);
     }
 
-    public static function appendFile(string $fullFilePath, mixed $data): bool 
+    public static function appendFile(string $fullFilePath, mixed $data): bool
     {
         if (!static::isReadable($fullFilePath))
             return false;
@@ -114,34 +116,42 @@ class File
         return str_replace('\\', '/', $fullPath);
     }
 
-    public static function parse(string $fullFilePath): array
+    public static function parse(string $fullFilePath, bool $useCache = false): array
     {
         if (!$fullFilePath)
             return [];
 
+        if ($cachedFile = static::$cache[$fullFilePath] ?? false)
+            return $cachedFile;
+
         $fileNameExt = File::fullName($fullFilePath);
         $extension = File::extension($fileNameExt);
 
-        return match ($extension) {
+        $parsedFile = match ($extension) {
             'json' => Json::parseFile($fullFilePath),
             'yml', 'yaml' => Yaml::parseFile($fullFilePath),
             'txt' => [static::read($fullFilePath)],
             default => throw new \Exception("File extension: $extension is not supported", 400),
         };
+
+        if ($useCache)
+            static::$cache[$fullFilePath] = $parsedFile;
+
+        return $parsedFile;
     }
 
-    public static function parseList(array $fileList): array
+    public static function parseList(array $fileList, bool $useCache = false): array
     {
         $parsedFileList = [];
 
         foreach ($fileList as $fullFilePath) {
 
-            $isReadable = File::isReadable($fullFilePath);
+            $isReadable = static::isReadable($fullFilePath);
             if (!$isReadable)
                 continue;
 
-            $fileData = File::parse($fullFilePath);
-            $fileName = File::name($fullFilePath);
+            $fileData = static::parse($fullFilePath, $useCache);
+            $fileName = static::name($fullFilePath);
             $parsedFileList[$fileName] = $fileData;
         }
 
