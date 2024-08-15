@@ -83,6 +83,25 @@ class File
         return $fileName;
     }
 
+    public static function directory(string $fullFilePath): string
+    {
+        $directory = dirname($fullFilePath);
+        return $directory;
+    }
+
+    public static function move(string $from, string $destination): bool
+    {
+        if (!static::isReadable($from))
+            return false;
+
+        $dir = static::directory($destination);
+        if (!Dir::isReadable($dir))
+            return false;
+
+        $isMoved = rename($from, $destination);
+        return $isMoved;
+    }
+
     public static function canonizeUnixPath(string $fullPath): string
     {
         $fullPath = File::normalizeUnixPath($fullPath);
