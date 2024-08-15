@@ -91,16 +91,16 @@ class File
         return $directory;
     }
 
-    public static function move(string $from, string $destination): bool
+    public static function move(string $from, string $to): bool
     {
         if (!static::isReadable($from))
             return false;
 
-        $dir = static::directory($destination);
+        $dir = static::directory($to);
         if (!Dir::isReadable($dir))
             return false;
 
-        $isMoved = rename($from, $destination);
+        $isMoved = rename($from, $to);
         return $isMoved;
     }
 
