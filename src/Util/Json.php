@@ -23,11 +23,8 @@ class Json
         return $decoded;
     }
 
-    public static function verifyAndDecode(
-        string $jsonString,
-        bool $asArray = true
-    ): ?array {
-
+    public static function verifyAndDecode(string $jsonString, bool $asArray = true): null|array 
+    {
         if (!$jsonString)
             return null;
 
@@ -38,7 +35,7 @@ class Json
         return static::decode($jsonString, $asArray);
     }
 
-    public static function decode(string $jsonString, bool $asArray = true): array|null
+    public static function decode(string $jsonString, bool $asArray = true): null|array
     {
         if (!$jsonString)
             return null;
@@ -59,7 +56,7 @@ class Json
         return json_last_error() === JSON_ERROR_NONE;
     }
 
-    public static function encode(array $toEncode, bool $prettyPrint = false): string|null
+    public static function encode(array $toEncode, bool $prettyPrint = false): null|string
     {
         $flags = 0;
         if ($prettyPrint)

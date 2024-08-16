@@ -32,11 +32,7 @@ class Expression
                     $operator = $item;
                     $operand_2 = array_shift($stack);
 
-                    $result = static::expression(
-                        $operand_1,
-                        $operator,
-                        $operand_2
-                    );
+                    $result = static::expression($operand_1, $operator, $operand_2);
 
                     $stack[] = $result;
                     break;
@@ -60,21 +56,14 @@ class Expression
         return $list;
     }
 
-    public static function expression(
-        $operand_1,
-        $operator,
-        $operand_2
-    ) {
-        switch ($operator) {
-            case '+':
-                return $operand_1 + $operand_2;
-            case '-':
-                return $operand_1 - $operand_2;
-            case '*':
-                return $operand_1 * $operand_2;
-            case '/':
-                return $operand_1 / $operand_2;
-        }
+    public static function expression(string|int|float $operand_1, string|int|float $operator, string|int|float $operand_2): string|int|float
+    {
+        return match ($operator) {
+            '+' => $operand_1 + $operand_2,
+            '-' => $operand_1 - $operand_2,
+            '*' => $operand_1 * $operand_2,
+            '/' => $operand_1 / $operand_2,
+        };
     }
 
     public static function postfixNotationStack(array $list): array

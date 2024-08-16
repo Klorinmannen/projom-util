@@ -9,11 +9,8 @@ use DOMElement;
 
 class Xml
 {
-    public static function encode(
-        array $toEncode,
-        string $rootNodeName
-    ): string {
-
+    public static function encode(array $toEncode, string $rootNodeName): string
+    {
         if (!$toEncode)
             return '';
 
@@ -42,11 +39,8 @@ class Xml
         return $result;
     }
 
-    public static function traverse(
-        array $toEncode,
-        DOMElement $rootNode
-    ): void {
-
+    public static function traverse(array $toEncode, DOMElement $rootNode): void 
+    {
         foreach ($toEncode as $key => $value) {
             if (is_array($value)) {
                 $node = new DOMElement((string)$key);

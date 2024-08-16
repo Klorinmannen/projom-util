@@ -6,10 +6,8 @@ namespace Projom\Util;
 
 class Debug
 {
-    public static function sql(
-        string $sql,
-        string $lb = "\n"
-    ) {
+    public static function sql(string $sql, string $lb = "\n"): string
+    {
         $output = preg_split(
             '/(SELECT|FROM|WHERE|INSERT INTO|VALUES|INNER JOIN|ON|LEFT JOIN|RIGHT JOIN)/',
             $sql,
@@ -19,19 +17,19 @@ class Debug
         return implode($lb, $output);
     }
 
-    public static function asString(array $subject)
+    public static function asString(array $subject): string
     {
         return var_export($subject);
     }
 
-    public static function html($subject)
+    public static function html($subject): void
     {
         echo '<pre>';
         print_r($subject);
         echo '</pre>';
     }
 
-    public static function html_dump($subject)
+    public static function html_dump($subject): void
     {
         echo '<pre>';
         var_dump($subject);
