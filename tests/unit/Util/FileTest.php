@@ -126,6 +126,15 @@ class FileTest extends TestCase
 		$this->assertEquals($expected, $actual);
 	}
 
+	#[Test]
+	public function directory(): void
+	{
+		$fullFilePath = __FILE__;
+		$expected = __DIR__;
+		$actual = File::directory($fullFilePath);
+		$this->assertEquals($expected, $actual);
+	}
+
 	public static function canonizeUnixPathProvider(): array
 	{
 		return [
