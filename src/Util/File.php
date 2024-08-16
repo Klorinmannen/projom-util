@@ -121,8 +121,9 @@ class File
         if (!$fullFilePath)
             return [];
 
-        if ($cachedFile = static::$cache[$fullFilePath] ?? false)
-            return $cachedFile;
+        if ($useCache)
+            if ($cachedFile = static::$cache[$fullFilePath] ?? false)
+                return $cachedFile;
 
         $fileNameExt = File::fullName($fullFilePath);
         $extension = File::extension($fileNameExt);
