@@ -5,91 +5,117 @@ declare(strict_types=1);
 namespace Projom\Tests\Unit\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Projom\Util\Strings;
 
 class StringsTest extends TestCase
 {
-    public static function provider_test_sanitize(): array
+    public static function toArrayProvider(): array
     {
         return [
             [
-                'string' => 'helloWorld!',
-                'expected' => 'helloWorld'
+                'subject' => 'a,b,c',
+                'delimeter' => ',',
+                'expected' => ['a', 'b', 'c']
             ],
             [
-                'string' => 'special@#$%characters',
-                'expected' => 'specialcharacters'
+                'subject' => 'a,b,c',
+                'delimeter' => ' ',
+                'expected' => ['a,b,c']
             ],
             [
-                'string' => '',
+                'subject' => 'a,b,c',
+                'delimeter' => 'b',
+                'expected' => ['a,', ',c']
+            ],
+            [
+                'subject' => '',
+                'delimeter' => ',',
+                'expected' => []
+            ]
+        ];
+    }
+
+    #[Test]
+    #[DataProvider('toArrayProvider')]
+    public function toArray(string $subject, string $delimeter, array $expected): void
+    {
+        $actual = Strings::toArray($subject, $delimeter);
+        $this->assertEquals($expected, $actual);
+    }
+
+    public static function cleanProvider(): array
+    {
+        return [
+            [
+                'subject' => ' a b c ',
+                'remove' => ' ',
+                'expected' => 'abc'
+            ],
+            [
+                'subject' => ' a b c ',
+                'remove' => 'b',
+                'expected' => ' a  c '
+            ],
+            [
+                'subject' => ' a b c ',
+                'remove' => 'd',
+                'expected' => ' a b c '
+            ],
+            [
+                'subject' => '',
+                'remove' => ' ',
                 'expected' => ''
+            ],
+            [
+                'subject' => ' a b c ',
+                'remove' => '',
+                'expected' => ' a b c '
             ]
         ];
     }
 
-    #[DataProvider('provider_test_sanitize')]
-    public function test_sanitize(string $string, string $expected): void
+    #[Test]
+    #[DataProvider('cleanProvider')]
+    public function clean(string $subject, string $remove, string $expected): void
     {
-        $this->assertEquals($expected, Strings::sanitize($string));
+        $actual = Strings::clean($subject, $remove);
+        $this->assertEquals($expected, $actual);
     }
 
-    public static function provider_test_matchTextPattern(): array
+    public static function splitProvider(): array
     {
-        return 
-        [
+        return [
             [
-                'subject' => 'test',
-                'expected' => true
+                'subject' => 'a,b,c',
+                'delimeter' => ',',
+                'expected' => ['a', 'b', 'c']
             ],
             [
-                'subject' => 'with space',
-                'expected' => true
+                'subject' => 'a,b,c',
+                'delimeter' => ' ',
+                'expected' => ['a,b,c']
             ],
             [
-                'subject' => '123',
-                'expected' => true
+                'subject' => 'a,b,c',
+                'delimeter' => 'b',
+                'expected' => ['a,', ',c']
             ],
             [
                 'subject' => '',
-                'expected' => true
+                'delimeter' => ',',
+                'expected' => []
             ]
         ];
     }
 
-    #[DataProvider('provider_test_matchTextPattern')]
-    public function test_matchPattern(string $subject, bool $expected): void
+    #[Test]
+    #[DataProvider('splitProvider')]
+    public function split(string $subject, string $delimeter, array $expected): void
     {
-        $this->assertEquals($expected, Strings::matchTextPattern($subject));
-    }
-
-    public static function provider_test_matchQueryPattern(): array
-    {
-        return 
-        [
-            [
-                'subject' => 'test/query?param=value',
-                'expected' => true
-            ],
-            [
-                'subject' => 'test/query?param=value&key=value',
-                'expected' => true
-            ],
-            [
-                'subject' => 'not valid',
-                'expected' => false
-            ],
-            [
-                'subject' => '',
-                'expected' => false
-            ]
-        ];
-    }
-
-    #[DataProvider('provider_test_matchQueryPattern')]
-    public function test_matchQueryPattern(string $subject, bool $expected): void
-    {
-        $this->assertEquals($expected, Strings::matchQueryPattern($subject));
+        $actual = Strings::split($subject, $delimeter);
+        $this->assertEquals($expected, $actual);
     }
 }

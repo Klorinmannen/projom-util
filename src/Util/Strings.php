@@ -13,17 +13,24 @@ class Strings
 
         $list = [$subject];
         if (strpos($subject, $delimeter) !== false)
-            $list = static::split($delimeter, $subject);
+            $list = static::split($subject, $delimeter);
         return $list;
     }
 
     public static function clean(string $subject, string $remove = ' '): string
     {
-        return str_replace($remove, '', trim($subject));
+        return str_replace($remove, '', $subject);
     }
 
     public static function split(string $subject, string $delimeter = ','): array
     {
-        return explode($delimeter, $subject);
+        if (!$subject)
+            return [];
+
+        $result = explode($delimeter, $subject);
+        if ($result === false)
+            return [];
+
+        return $result;
     }
 }
