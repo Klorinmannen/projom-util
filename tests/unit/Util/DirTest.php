@@ -5,41 +5,45 @@ declare(strict_types=1);
 namespace Projom\Tests\Unit\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Projom\Util\Dir;
 
 class DirTest extends TestCase
 {
-	public function test_systemPath(): void
+	#[Test]
+	public function systemPath(): void
 	{
 		$this->assertNotEmpty(Dir::systemPath());
 		$this->assertEmpty(Dir::systemPath('not_src'));
 	}
 
-	public static function provider_test_parse(): array
+	public static function parseProvider(): array
 	{
 		return [
 			[
 				'fullDirPath' => __DIR__ . '/test_files',
-				'expected' => [ 
-					'json_file' => [ 'KEY' => 'value' ], 
-					'yaml_file' => [ 'KEY' => 'value' ],
-					'text_file' => [ 0 => 'A text file.' ],
-					'empty_text_file' => [ 0 => '' ],
+				'expected' => [
+					'json_file' => ['KEY' => 'value'],
+					'yaml_file' => ['KEY' => 'value'],
+					'text_file' => [0 => 'A text file.'],
+					'empty_text_file' => [0 => ''],
 					'empty_json_file' => []
 				]
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_parse')]
-	public function test_parse(string $fullDirPath, array $expected): void
+
+	#[Test]
+	#[DataProvider('parseProvider')]
+	public function parse(string $fullDirPath, array $expected): void
 	{
-		$this->assertEquals($expected, Dir::parse($fullDirPath));
+		$actual = Dir::parse($fullDirPath);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_isReadable(): array
+	public static function isReadableProvider(): array
 	{
 		return [
 			'Directory' => [
@@ -56,14 +60,16 @@ class DirTest extends TestCase
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_isReadable')]
-	public function test_isReadable(string $value, bool $expected): void
+
+	#[Test]
+	#[DataProvider('isReadableProvider')]
+	public function isReadables(string $value, bool $expected): void
 	{
-		$this->assertEquals($expected, Dir::isReadable($value));
+		$actual = Dir::isReadable($value);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_cleanFileList(): array
+	public static function cleanFileListProvider(): array
 	{
 		return [
 			[
@@ -80,24 +86,26 @@ class DirTest extends TestCase
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_cleanFileList')]
-	public function test_cleanFileList(array $value, array $expected): void
+
+	#[Test]
+	#[DataProvider('cleanFileListProvider')]
+	public function cleanFileList(array $value, array $expected): void
 	{
-		$this->assertEqualsCanonicalizing($expected, Dir::cleanFileList($value));
+		$actual = Dir::cleanFileList($value);
+		$this->assertEqualsCanonicalizing($expected, $actual);
 	}
 
-	public static function provider_test_prependFullDirPath(): array
+	public static function prependfullDirPathProvider(): array
 	{
 		return [
 			[
 				'fullDirPath' => __DIR__,
-				'fileList' => [ 
-					'file1', 
-					'file2', 
-					'file3' 
+				'fileList' => [
+					'file1',
+					'file2',
+					'file3'
 				],
-				'expected' => [ 
+				'expected' => [
 					__DIR__ . DIRECTORY_SEPARATOR . 'file1',
 					__DIR__ . DIRECTORY_SEPARATOR . 'file2',
 					__DIR__ . DIRECTORY_SEPARATOR . 'file3'
@@ -105,10 +113,12 @@ class DirTest extends TestCase
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_prependFullDirPath')]
-	public function test_prependFullDirPath(string $fullDirPath, array $fileList, array $expected): void
+
+	#[Test]
+	#[DataProvider('prependfullDirPathProvider')]
+	public function prependfullDirPath(string $fullDirPath, array $fileList, array $expected): void
 	{
-		$this->assertEquals($expected, Dir::prependfullDirPath($fullDirPath, $fileList));
+		$actual = Dir::prependfullDirPath($fullDirPath, $fileList);
+		$this->assertEquals($expected, $actual);
 	}
 }

@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Projom\Tests\Unit\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Projom\Util\Template;
 
 class TemplateTest extends TestCase
 {
-    public static function provider_test_bind(): array
+    public static function bindProvider(): array
     {
         return [
             [
@@ -32,13 +33,15 @@ class TemplateTest extends TestCase
         ];
     }
 
-    #[DataProvider('provider_test_bind')]
-    public function test_bind(string $template, array $vars, string $expected): void
+    #[Test]
+    #[DataProvider('bindProvider')]
+    public function bind(string $template, array $vars, string $expected): void
     {
-        $this->assertEquals($expected, Template::bind($template, $vars));
+        $actual = Template::bind($template, $vars);
+        $this->assertEquals($expected, $actual);
     }
 
-    public static function provider_test_templatedVars(): array
+    public static function templatedVarsProvider(): array
     {
         return [
             [
@@ -47,13 +50,13 @@ class TemplateTest extends TestCase
             ],
             [
                 'subjects' => [
-					'greeting', 
-					'name'
-				],
+                    'greeting',
+                    'name'
+                ],
                 'expected' => [
-					'{{greeting}}', 
-					'{{name}}'
-					]
+                    '{{greeting}}',
+                    '{{name}}'
+                ]
             ],
             [
                 'subjects' => [],
@@ -62,9 +65,11 @@ class TemplateTest extends TestCase
         ];
     }
 
-    #[DataProvider('provider_test_templatedVars')]
-    public function test_templatedVars(array $subjects, array $expected): void
+    #[Test]
+    #[DataProvider('templatedVarsProvider')]
+    public function templatedVars(array $subjects, array $expected): void
     {
-        $this->assertEquals($expected, Template::templatedVars($subjects));
+        $actual = Template::templatedVars($subjects);
+        $this->assertEquals($expected, $actual);
     }
 }

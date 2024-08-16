@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Projom\Tests\Unit\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Projom\Util\Validate;
 
 class ValidateTest extends TestCase
 {
-	public static function provider_test_float(): array
+	public static function floatProvider(): array
 	{
 		return [
 			[
@@ -29,13 +30,15 @@ class ValidateTest extends TestCase
 		];
 	}
 
-	#[DataProvider('provider_test_float')]
-	public function test_float(float $float, bool $expected): void
+	#[Test]
+	#[DataProvider('floatProvider')]
+	public function float(float $float, bool $expected): void
 	{
-		$this->assertEquals($expected, Validate::float($float));
+		$actual = Validate::float($float);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_int(): array
+	public static function intProvider(): array
 	{
 		return [
 			[
@@ -53,13 +56,15 @@ class ValidateTest extends TestCase
 		];
 	}
 
-	#[DataProvider('provider_test_int')]
-	public function test_int(int $int, bool $expected): void
+	#[Test]
+	#[DataProvider('intProvider')]
+	public function int(int $int, bool $expected): void
 	{
-		$this->assertEquals($expected, Validate::int($int));
+		$actual = Validate::int($int);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_id(): array
+	public static function idProvider(): array
 	{
 		return [
 			[
@@ -77,13 +82,15 @@ class ValidateTest extends TestCase
 		];
 	}
 
-	#[DataProvider('provider_test_id')]
-	public function test_id(int $id, bool $expected): void
+	#[Test]
+	#[DataProvider('idProvider')]
+	public function id(int $id, bool $expected): void
 	{
-		$this->assertEquals($expected, Validate::id($id));
+		$actual = Validate::id($id);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_string(): array
+	public static function textStringProvider(): array
 	{
 		return [
 			[
@@ -113,13 +120,15 @@ class ValidateTest extends TestCase
 		];
 	}
 
-	#[DataProvider('provider_test_string')]
-	public function test_string(string $string, bool $expected): void
+	#[Test]
+	#[DataProvider('textStringProvider')]
+	public function textString(string $string, bool $expected): void
 	{
-		$this->assertEquals($expected, Validate::textString($string));
+		$actual = Validate::textString($string);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_query(): array
+	public static function queryStringProvider(): array
 	{
 		return [
 			[
@@ -133,9 +142,11 @@ class ValidateTest extends TestCase
 		];
 	}
 
-	#[DataProvider('provider_test_query')]
+	#[Test]
+	#[DataProvider('queryStringProvider')]
 	public function test_query(string $query, bool $expected): void
 	{
-		$this->assertEquals($expected, Validate::queryString($query));
+		$actual = Validate::queryString($query);
+		$this->assertEquals($expected, $actual);
 	}
 }

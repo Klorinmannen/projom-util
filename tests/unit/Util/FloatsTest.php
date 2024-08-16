@@ -5,49 +5,44 @@ declare(strict_types=1);
 namespace Projom\Tests\Unit\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Projom\Util\Floats;
 
 class FloatsTest extends TestCase
 {
-	public static function provider_test_matchPattern(): array
+	public static function isFloatProvider(): array
 	{
 		return [
 			[
-				'subject' => 1,
-				'expected' => true
+				'1.1',
+				true
 			],
 			[
-				'subject' => 1.2,
-				'expected' => true
+				'1',
+				false
 			],
 			[
-				'subject' => 1.2,
-				'expected' => true
+				1.1,
+				true
 			],
 			[
-				'subject' => 1001,
-				'expected' => true
+				1,
+				false
 			],
 			[
-				'subject' => 1001.1001,
-				'expected' => true
-			],
-			[
-				'subject' => 0,
-				'expected' => true
-			],
-			[
-				'subject' => -1001.1001,
-				'expected' => true
+				'',
+				false
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_matchPattern')]
-	public function test_matchPattern(float $subject, bool $expected): void
+
+	#[Test]
+	#[DataProvider('isFloatProvider')]
+	public function isFloat(string|int|float $subject, bool $expected): void
 	{
-		$this->assertEquals($expected, Floats::matchPattern($subject));
+		$actual = Floats::isFloat($subject);
+		$this->assertEquals($expected, $actual);
 	}
 }

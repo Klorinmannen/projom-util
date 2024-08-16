@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Projom\Tests\Unit\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Projom\Util\Xml;
 
 class XmlTest extends TestCase
 {
-	public static function provider_test_encode(): array
+	public static function encodeProvider(): array
 	{
 		return [
 			[
@@ -43,9 +44,11 @@ class XmlTest extends TestCase
 		];
 	}
 
-	#[DataProvider('provider_test_encode')]
-	public function test_encode(array $toEncode, string $rootNodeName, string $expected): void
+	#[Test]
+	#[DataProvider('encodeProvider')]
+	public function encode(array $toEncode, string $rootNodeName, string $expected): void
 	{
-		$this->assertEquals($expected, Xml::encode($toEncode, $rootNodeName));
+		$actual = Xml::encode($toEncode, $rootNodeName);
+		$this->assertEquals($expected, $actual);
 	}
 }

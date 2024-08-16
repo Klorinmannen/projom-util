@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Projom\Tests\Unit\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Projom\Util\Math;
 
 class MathTest extends TestCase
 {
-    public static function provider_test_isSubset(): array
+    public static function isSubsetKeyProvider(): array
     {
         return [
             [
@@ -63,9 +64,55 @@ class MathTest extends TestCase
         ];
     }
 
-    #[DataProvider('provider_test_isSubset')]
-    public function test_isSubset(array $subset, array $superset, bool $expected): void
+    #[Test]
+    #[DataProvider('isSubsetKeyProvider')]
+    public function isSubsetKey(array $subset, array $superset, bool $expected): void
     {
-        $this->assertEquals($expected, Math::isSubsetKey($subset, $superset));
+        $actual = Math::isSubsetKey($subset, $superset);
+        $this->assertEquals($expected, $actual);
+    }
+
+    public static function clampProvider(): array
+    {
+        return [
+            [
+                'min' => 0,
+                'max' => 10,
+                'value' => 5,
+                'expected' => 5
+            ],
+            [
+                'min' => 0,
+                'max' => 10,
+                'value' => -5,
+                'expected' => 0
+            ],
+            [
+                'min' => 0,
+                'max' => 10,
+                'value' => 15,
+                'expected' => 10
+            ],
+            [
+                'min' => 0,
+                'max' => 10,
+                'value' => 0,
+                'expected' => 0
+            ],
+            [
+                'min' => 0,
+                'max' => 10,
+                'value' => 10,
+                'expected' => 10
+            ]
+        ];
+    }
+
+    #[Test]
+    #[DataProvider('clampProvider')]
+    public function clamp(float|int $min, float|int $max, float|int $value, float|int $expected): void
+    {
+        $actual = Math::clamp($min, $max, $value);
+        $this->assertEquals($expected, $actual);
     }
 }

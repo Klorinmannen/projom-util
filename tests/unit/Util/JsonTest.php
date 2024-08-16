@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Projom\Tests\Unit\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Projom\Util\Json;
 
 class JsonTest extends TestCase
 {
-	public static function provider_test_parseFile(): array
+	public static function parseFileProvider(): array
 	{
 		return [
 			[
@@ -35,47 +36,15 @@ class JsonTest extends TestCase
 		];
 	}
 
-	#[DataProvider('provider_test_parseFile')]
-	public function test_parseFile(string $fullFilePath, array $expected): void
+	#[Test]
+	#[DataProvider('parseFileProvider')]
+	public function parseFile(string $fullFilePath, array $expected): void
 	{
-		$this->assertEquals($expected, Json::parseFile($fullFilePath));
+		$actual = Json::parseFile($fullFilePath);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_verifyAndDecode(): array
-	{
-		return [
-			'Empty string' => [
-				'jsonString' => '',
-				'asArray' => true,
-				'expected' => null
-			],
-			'Malformed json' => [
-				'jsonString' => '"key": "value"}',
-				'asArray' => true,
-				'expected' => null
-			],
-			'Proper json' => [
-				'jsonString' => '{"key": "value"}',
-				'asArray' => true,
-				'expected' => [
-					'key' => 'value'
-				]
-			],
-			'Empty json' => [
-				'jsonString' => '[]',
-				'asArray' => true,
-				'expected' => []
-			],
-		];
-	}
-
-	#[DataProvider('provider_test_verifyAndDecode')]
-	public function test_verifyAndDecode(string $jsonString, bool $asArray, ?array $expected): void
-	{
-		$this->assertEquals($expected, Json::verifyAndDecode($jsonString, $asArray));
-	}
-
-	public static function provider_test_decode(): array
+	public static function verifyAndDecodeProvider(): array
 	{
 		return [
 			'Empty string' => [
@@ -103,13 +72,51 @@ class JsonTest extends TestCase
 		];
 	}
 
-	#[DataProvider('provider_test_decode')]
-	public function test_decode(string $jsonString, bool $asArray, ?array $expected): void
+	#[Test]
+	#[DataProvider('verifyAndDecodeProvider')]
+	public function verifyAndDecode(string $jsonString, bool $asArray, null|array $expected): void
 	{
-		$this->assertEquals($expected, Json::decode($jsonString, $asArray));
+		$actual = Json::verifyAndDecode($jsonString, $asArray);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_verify(): array
+	public static function decodeProvider(): array
+	{
+		return [
+			'Empty string' => [
+				'jsonString' => '',
+				'asArray' => true,
+				'expected' => null
+			],
+			'Malformed json' => [
+				'jsonString' => '"key": "value"}',
+				'asArray' => true,
+				'expected' => null
+			],
+			'Proper json' => [
+				'jsonString' => '{"key": "value"}',
+				'asArray' => true,
+				'expected' => [
+					'key' => 'value'
+				]
+			],
+			'Empty json' => [
+				'jsonString' => '[]',
+				'asArray' => true,
+				'expected' => []
+			],
+		];
+	}
+
+	#[Test]
+	#[DataProvider('decodeProvider')]
+	public function decode(string $jsonString, bool $asArray, null|array $expected): void
+	{
+		$actual = Json::decode($jsonString, $asArray);
+		$this->assertEquals($expected, $actual);
+	}
+
+	public static function verifyProvider(): array
 	{
 		return [
 			[
@@ -147,13 +154,15 @@ class JsonTest extends TestCase
 		];
 	}
 
-	#[DataProvider('provider_test_verify')]
-	public function test_verify(string $jsonString, bool $expected): void
+	#[Test]
+	#[DataProvider('verifyProvider')]
+	public function verify(string $jsonString, bool $expected): void
 	{
-		$this->assertEquals($expected, Json::verify($jsonString));
+		$actual = Json::verify($jsonString);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_encode(): array
+	public static function encodeProvider(): array
 	{
 		return [
 			'Bad value' => [
@@ -185,9 +194,11 @@ class JsonTest extends TestCase
 		];
 	}
 
-	#[DataProvider('provider_test_encode')]
-	public function test_encode(array $toEncode, bool $prettyPrint, ?string $expected): void
+	#[Test]
+	#[DataProvider('encodeProvider')]
+	public function encode(array $toEncode, bool $prettyPrint, null|string $expected): void
 	{
-		$this->assertEquals($expected, Json::encode($toEncode, $prettyPrint));
+		$actual = Json::encode($toEncode, $prettyPrint);
+		$this->assertEquals($expected, $actual);
 	}
 }

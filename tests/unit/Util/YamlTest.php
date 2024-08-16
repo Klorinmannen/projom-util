@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Projom\Tests\Unit\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Projom\Util\Yaml;
 
 class YamlTest extends TestCase
 {
-	public static function provider_test_parseFile(): array
+	public static function parseFileProvider(): array
 	{
 		return [
 			'Empty fullFilePath' => [
@@ -30,10 +31,12 @@ class YamlTest extends TestCase
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_parseFile')]
-	public function test_method_name(string $fullFilePath, array $expected): void
+
+	#[Test]
+	#[DataProvider('parseFileProvider')]
+	public function parseFile(string $fullFilePath, array $expected): void
 	{
-		$this->assertEquals($expected, Yaml::parseFile($fullFilePath));
+		$actual = Yaml::parseFile($fullFilePath);
+		$this->assertEquals($expected, $actual);
 	}
 }

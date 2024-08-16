@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Projom\Tests\Unit\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Projom\Util\File;
 
 class FileTest extends TestCase
 {
-	public static function provider_test_IsReadable(): array
+	public static function isReadableProvider(): array
 	{
 		return [
 			[
@@ -28,14 +29,16 @@ class FileTest extends TestCase
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_IsReadable')]
-	public function test_method_name(string $fullFilePath, bool $expected): void
+
+	#[Test]
+	#[DataProvider('isReadableProvider')]
+	public function isReadables(string $fullFilePath, bool $expected): void
 	{
-		$this->assertEquals($expected, File::isReadable($fullFilePath));
+		$actual = File::isReadable($fullFilePath);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_fullName(): array
+	public static function fullNameProvider(): array
 	{
 		return [
 			[
@@ -48,14 +51,16 @@ class FileTest extends TestCase
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_fullName')]
-	public function test_fullName(string $fullFilePath, string $expected): void
+
+	#[Test]
+	#[DataProvider('fullNameProvider')]
+	public function fullName(string $fullFilePath, string $expected): void
 	{
-		$this->assertEquals($expected, File::fullName($fullFilePath));
+		$actual	= File::fullName($fullFilePath);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_name(): array
+	public static function nameProvider(): array
 	{
 		return [
 			[
@@ -68,14 +73,16 @@ class FileTest extends TestCase
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_name')]
-	public function test_name(string $fullFilePath, string $expected): void
+
+	#[Test]
+	#[DataProvider('nameProvider')]
+	public function names(string $fullFilePath, string $expected): void
 	{
-		$this->assertEquals($expected, File::name($fullFilePath));
+		$actual = File::name($fullFilePath);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_extension(): array
+	public static function extensionProvider(): array
 	{
 		return [
 			[
@@ -88,14 +95,16 @@ class FileTest extends TestCase
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_extension')]
-	public function test_extension(string $fullFilePath, string $expected): void
+
+	#[Test]
+	#[DataProvider('extensionProvider')]
+	public function extension(string $fullFilePath, string $expected): void
 	{
-		$this->assertEquals($expected, File::extension($fullFilePath));
+		$actual = File::extension($fullFilePath);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_removeExtension(): array
+	public static function removeExtensionProvider(): array
 	{
 		return [
 			[
@@ -108,14 +117,16 @@ class FileTest extends TestCase
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_removeExtension')]
-	public function test_removeExtension(string $fullFilePath, string $expected): void
+
+	#[Test]
+	#[DataProvider('removeExtensionProvider')]
+	public function removeExtension(string $fullFilePath, string $expected): void
 	{
-		$this->assertEquals($expected, File::removeExtension($fullFilePath));
+		$actual = File::removeExtension($fullFilePath);
+		$this->assertEquals($expected, $actual);
 	}
-	
-	public static function provider_canonizeUnixPath(): array
+
+	public static function canonizeUnixPathProvider(): array
 	{
 		return [
 			[
@@ -128,14 +139,16 @@ class FileTest extends TestCase
 			]
 		];
 	}
-	
-	#[DataProvider('provider_canonizeUnixPath')]
-	public function test_canonizeUnixPath(string $fullPath, string $expected): void
+
+	#[Test]
+	#[DataProvider('canonizeUnixPathProvider')]
+	public function canonizeUnixPath(string $fullPath, string $expected): void
 	{
-		$this->assertEquals($expected, File::canonizeUnixPath($fullPath));
+		$actual = File::canonizeUnixPath($fullPath);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_normalizeUnixPath(): array
+	public static function normalizeUnixPathProvider(): array
 	{
 		return [
 			'windows path' => [
@@ -152,14 +165,16 @@ class FileTest extends TestCase
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_normalizeUnixPath')]
-	public function test_normalizeUnixPath(string $fullPath, $expected): void
+
+	#[Test]
+	#[DataProvider('normalizeUnixPathProvider')]
+	public function normalizeUnixPath(string $fullPath, $expected): void
 	{
-		$this->assertEquals($expected, File::normalizeUnixPath($fullPath));
+		$actual = File::normalizeUnixPath($fullPath);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_parse(): array
+	public static function parseProvider(): array
 	{
 		return [
 			[
@@ -182,14 +197,16 @@ class FileTest extends TestCase
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_parse')]
-	public function test_parse(string $fullFilePath, array $expected): void
+
+	#[Test]
+	#[DataProvider('parseProvider')]
+	public function parse(string $fullFilePath, array $expected): void
 	{
-		$this->assertEquals($expected, File::parse($fullFilePath));
+		$actual = File::parse($fullFilePath);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_parseList(): array
+	public static function parseListProvider(): array
 	{
 		return [
 			[
@@ -215,10 +232,12 @@ class FileTest extends TestCase
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_parseList')]
-	public function test_parseList(array $fileList, array $expected): void
+
+	#[Test]
+	#[DataProvider('parseListProvider')]
+	public function parseList(array $fileList, array $expected): void
 	{
-		$this->assertEquals($expected, File::parseList($fileList));
+		$actual = File::parseList($fileList);
+		$this->assertEquals($expected, $actual);
 	}
 }

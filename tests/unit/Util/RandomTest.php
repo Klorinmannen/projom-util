@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Projom\Tests\Unit\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Projom\Util\Random;
 
 class RandomTest extends TestCase
 {
-    public static function provider_test_numberString(): array
+    public static function stringProvider(): array
     {
         return [
             [
@@ -37,14 +38,16 @@ class RandomTest extends TestCase
         ];
     }
 
-    #[DataProvider('provider_test_numberString')]
-    public function test_numberString(int $length, int $bytes, int $expectedLength): void
+    #[Test]
+    #[DataProvider('stringProvider')]
+    public function string(int $length, int $bytes, int $expectedLength): void
     {
-        $result = Random::numberString($length, $bytes);
-        $this->assertEquals($expectedLength, strlen($result));
+        $string = Random::string($length, $bytes);
+        $actual = strlen($string);
+        $this->assertEquals($expectedLength, $actual);
     }
 
-    public static function provider_test_numberString_exception(): array
+    public static function exceptionProvider(): array
     {
         return [
             [
@@ -54,10 +57,11 @@ class RandomTest extends TestCase
         ];
     }
 
-    #[DataProvider('provider_test_numberString_exception')]
-    public function test_numberString_exception(int $length, int $bytes): void
+    #[Test]
+    #[DataProvider('exceptionProvider')]
+    public function exception(int $length, int $bytes): void
     {
         $this->expectException(\ValueError::class);
-        Random::numberString($length, $bytes);
+        Random::string($length, $bytes);
     }
 }

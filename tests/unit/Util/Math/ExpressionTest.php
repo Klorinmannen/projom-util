@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Projom\Tests\Unit\Util\Math;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Projom\Util\Math\Expression;
 
 class ExpressionTest extends TestCase
 {
-    public static function provider_test_eval(): array
+    public static function evalProvider(): array
     {
         return [
             [
@@ -37,13 +38,15 @@ class ExpressionTest extends TestCase
         ];
     }
 
-    #[DataProvider('provider_test_eval')]
-    public function test_eval(string $expression, ?int $expected): void
+    #[Test]
+    #[DataProvider('evalProvider')]
+    public function eval(string $expression, ?int $expected): void
     {
-        $this->assertEquals($expected, Expression::eval($expression));
+        $actual = Expression::eval($expression);
+        $this->assertEquals($expected, $actual);
     }
 
-    public static function provider_test_cleanExpression(): array
+    public static function cleanExpressionProvider(): array
     {
         return [
             [
@@ -61,13 +64,15 @@ class ExpressionTest extends TestCase
         ];
     }
 
-    #[DataProvider('provider_test_cleanExpression')]
-    public function test_cleanExpression(string $expression, string $expected): void
+    #[Test]
+    #[DataProvider('cleanExpressionProvider')]
+    public function cleanExpression(string $expression, string $expected): void
     {
-        $this->assertEquals($expected, Expression::cleanExpression($expression));
+        $actual = Expression::cleanExpression($expression);
+        $this->assertEquals($expected, $actual);
     }
 
-    public static function provider_test_matchExpressionPattern(): array
+    public static function matchExpressionPatternProvider(): array
     {
         return [
             [
@@ -85,13 +90,15 @@ class ExpressionTest extends TestCase
         ];
     }
 
-    #[DataProvider('provider_test_matchExpressionPattern')]
-    public function test_matchExpressionPattern(string $expression, array $expected): void
+    #[Test]
+    #[DataProvider('matchExpressionPatternProvider')]
+    public function matchExpressionPattern(string $expression, array $expected): void
     {
-        $this->assertEquals($expected, Expression::matchExpressionPattern($expression));
+        $actual = Expression::matchExpressionPattern($expression);
+        $this->assertEquals($expected, $actual);
     }
 
-    public static function provider_test_expression(): array
+    public static function expressionProvider(): array
     {
         return [
             [
@@ -121,13 +128,15 @@ class ExpressionTest extends TestCase
         ];
     }
 
-    #[DataProvider('provider_test_expression')]
-    public function test_expression($operand_1, $operator, $operand_2, $expected): void
+    #[Test]
+    #[DataProvider('expressionProvider')]
+    public function expression(int|float $operand_1, string $operator, int|float $operand_2, int $expected): void
     {
-        $this->assertEquals($expected, Expression::expression($operand_1, $operator, $operand_2));
+        $actual = Expression::expression($operand_1, $operator, $operand_2);
+        $this->assertEquals($expected, $actual);
     }
 
-    public static function provider_test_postfixNotationStack(): array
+    public static function postfixNotationStackProvider(): array
     {
         return [
             [
@@ -141,9 +150,11 @@ class ExpressionTest extends TestCase
         ];
     }
 
-    #[DataProvider('provider_test_postfixNotationStack')]
-    public function test_postfixNotationStack(array $list, array $expected): void
+    #[Test]
+    #[DataProvider('postfixNotationStackProvider')]
+    public function postfixNotationStack(array $list, array $expected): void
     {
-        $this->assertEquals($expected, Expression::postfixNotationStack($list));
+        $actual = Expression::postfixNotationStack($list);
+        $this->assertEquals($expected, $actual);
     }
 }

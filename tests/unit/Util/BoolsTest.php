@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Projom\Tests\Unit\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Projom\Util\Bools;
 
 class BoolsTest extends TestCase
 {
-	public static function provider_test_toBoolean(): array
+	public static function toBooleanProvider(): array
 	{
 		return [
 			[
@@ -36,10 +37,12 @@ class BoolsTest extends TestCase
 			]
 		];
 	}
-	
-	#[DataProvider('provider_test_toBoolean')]
-	public function test_toBoolean(string $boolString, ?bool $expected): void
+
+	#[Test]
+	#[DataProvider('toBooleanProvider')]
+	public function toBoolean(string $boolString, ?bool $expected): void
 	{
-		$this->assertEquals($expected, Bools::toBoolean($boolString));
+		$actual = Bools::toBoolean($boolString);
+		$this->assertEquals($expected, $actual);
 	}
 }

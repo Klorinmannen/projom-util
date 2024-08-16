@@ -5,73 +5,67 @@ declare(strict_types=1);
 namespace Projom\Tests\Unit\Util;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Projom\Util\Integers;
 
 class IntegersTest extends TestCase
 {
-	public static function provider_test_matchPattern(): array
+
+	public static function isIntProvider(): array
 	{
 		return [
 			[
-				'subject' => 5,
-				'expected' => true
+				1,
+				true
 			],
 			[
-				'subject' => -5,
-				'expected' => true
+				1.2,
+				false
 			],
 			[
-				'subject' => 0,
-				'expected' => true
+				'1',
+				true
 			],
 			[
-				'subject' => 999,
-				'expected' => true
+				'1.2',
+				false
 			],
 			[
-				'subject' => -999,
-				'expected' => true
+				'1001',
+				true
+			],
+			[
+				'1001.1001',
+				false
+			],
+			[
+				'0',
+				true
+			],
+			[
+				'-1001.1001',
+				false
+			],
+			[
+				-1,
+				true
+			],
+			[
+				'',
+				false
 			]
 		];
 	}
 
-	#[DataProvider('provider_test_matchPattern')]
-	public function test_matchPattern(int $subject, bool $expected): void
+	#[Test]
+	#[DataProvider('isIntProvider')]
+	public function isInt(string|int|float $subject, bool $expected): void
 	{
-		$this->assertEquals($expected, Integers::matchPattern($subject));
+		$actual = Integers::isInt($subject);
+		$this->assertEquals($expected, $actual);
 	}
 
-	public static function provider_test_matchIdPattern(): array
-	{
-		return [
-			[
-				'subject' => 5,
-				'expected' => true
-			],
-			[
-				'subject' => -5,
-				'expected' => false
-			],
-			[
-				'subject' => 0,
-				'expected' => false
-			],
-			[
-				'subject' => 999,
-				'expected' => true
-			],
-			[
-				'subject' => -999,
-				'expected' => false
-			]
-		];
-	}
 
-	#[DataProvider('provider_test_matchIdPattern')]
-	public function test_matchIdPattern(int $subject, bool $expected): void
-	{
-		$this->assertEquals($expected, Integers::matchIdPattern($subject));
-	}
 }
