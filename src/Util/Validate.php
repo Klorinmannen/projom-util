@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Projom\Util;
 
+use Projom\Util\Regex;
+
 class Validate
 {
     public static function float(float $float): bool
     {
-        return floats::matchPattern($float);
+        return Regex::matchFloat($float);
     }
 
     public static function int(int $int): bool
     {
-        return integers::matchPattern($int);
+        return Regex::matchInteger($int);
     }
 
     public static function id(int $id): bool
@@ -21,7 +23,7 @@ class Validate
         if ($id <= 0)
             return false;
 
-        return integers::matchIdPattern($id);
+        return Regex::matchID($id);
     }
 
     public static function textString(string $string): bool
@@ -29,7 +31,7 @@ class Validate
         if ($string === '')
             return true;
 
-        return strings::matchTextPattern($string);
+        return Regex::matchText($string);
     }
 
     public static function queryString(string $query): bool
@@ -37,6 +39,6 @@ class Validate
         if ($query === '')
             return false;
 
-        return strings::matchQueryPattern($query);
+        return Regex::matchQuery($query);
     }
 }

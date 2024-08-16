@@ -6,27 +6,24 @@ namespace Projom\Util;
 
 class Strings
 {
-    const TEXT_PATTERN = '/^.*$/';
-    const QUERY_PATTERN = '/^[\w\/\.?=&]+$/';
-    const SANTIZE_PATTERN = '/[^\w]+/';
-
-    public static function sanitize(string $string): string
+    public static function toArray(string $subject, string $delimeter = ','): array
     {
-        $pattern = static::SANTIZE_PATTERN;
-        return preg_replace($pattern, '', $string);
+        if (!$subject)
+            return [];
+
+        $list = [$subject];
+        if (strpos($subject, $delimeter) !== false)
+            $list = static::split($delimeter, $subject);
+        return $list;
     }
 
-    public static function matchTextPattern(string $subject): bool
+    public static function clean(string $subject, string $remove = ' '): string
     {
-        $pattern = static::TEXT_PATTERN;
-        $match = preg_match($pattern, $subject) === 1;
-        return $match;
+        return str_replace($remove, '', trim($subject));
     }
 
-    public static function matchQueryPattern(string $subject): bool
+    public static function split(string $subject, string $delimeter = ','): array
     {
-        $pattern = static::QUERY_PATTERN;
-        $match = preg_match($pattern, $subject) === 1;
-        return $match;
+        return explode($delimeter, $subject);
     }
 }
