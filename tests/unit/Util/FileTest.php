@@ -202,14 +202,14 @@ class FileTest extends TestCase
 			],
 			[
 				'fullFilePath' => 'some/file/path/file.json',
-				'expected' => []
+				'expected' => null
 			]
 		];
 	}
 
 	#[Test]
 	#[DataProvider('parseProvider')]
-	public function parse(string $fullFilePath, array $expected): void
+	public function parse(string $fullFilePath, null|array $expected): void
 	{
 		$actual = File::parse($fullFilePath);
 		$this->assertEquals($expected, $actual);
