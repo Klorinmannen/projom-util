@@ -28,8 +28,6 @@ class Strings
             return [];
 
         $result = explode($delimeter, $subject);
-        if ($result === false)
-            return [];
 
         return $result;
     }
