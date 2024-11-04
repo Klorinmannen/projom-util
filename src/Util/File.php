@@ -12,6 +12,18 @@ class File
 {
     private array $cache = [];
 
+    public static function create(string $fullFilePath): bool
+    {
+        $dir = static::directory($fullFilePath);
+        if (!Dir::create($dir, permission: 0766, recursive: true))
+            return false;
+
+        if (is_file($fullFilePath))
+            return true;
+
+        return touch($fullFilePath);
+    }
+
     public static function write(string $fullFilePath, mixed $data, int $flags = LOCK_EX): bool
     {
         if (!static::isWriteable($fullFilePath))
