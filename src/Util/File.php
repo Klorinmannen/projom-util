@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Projom\Util;
 
+use Projom\Util\Dir;
 use Projom\Util\Json;
 use Projom\Util\Yaml;
 
@@ -11,12 +12,12 @@ class File
 {
     private array $cache = [];
 
-    public static function write(string $fullFilePath, mixed $data): bool
+    public static function write(string $fullFilePath, mixed $data, int $flags = LOCK_EX): bool
     {
         if (!static::isWriteable($fullFilePath))
             return false;
 
-        file_put_contents($fullFilePath, $data, LOCK_EX);
+        file_put_contents($fullFilePath, $data, $flags);
 
         return true;
     }
@@ -24,14 +25,13 @@ class File
     public static function isWriteable(string $fullFilePath): bool
     {
         $dir = dirname($fullFilePath);
-
         if (!is_dir($dir))
             return false;
 
         return is_writeable($dir);
     }
 
-    public static function appendFile(string $fullFilePath, mixed $data): bool
+    public static function writeAppend(string $fullFilePath, mixed $data): bool
     {
         if (!static::isReadable($fullFilePath))
             return false;
@@ -41,7 +41,7 @@ class File
         return true;
     }
 
-    public static function read(string $fullFilePath): string|null
+    public static function read(string $fullFilePath): null|string
     {
         if (!static::isReadable($fullFilePath))
             return null;
@@ -51,8 +51,6 @@ class File
 
     public static function isReadable(string $fullFilePath): bool
     {
-        if (!file_exists($fullFilePath))
-            return false;
         if (!is_file($fullFilePath))
             return false;
         if (!is_readable($fullFilePath))
@@ -60,7 +58,7 @@ class File
         return true;
     }
 
-    public static function fullName(string $fullFilePath): string
+    public static function fullname(string $fullFilePath): string
     {
         $baseName = pathinfo($fullFilePath, PATHINFO_BASENAME);
         return $baseName;
@@ -116,7 +114,7 @@ class File
         return str_replace('\\', '/', $fullPath);
     }
 
-    public static function parse(string $fullFilePath, bool $useCache = false): array
+    public static function parse(string $fullFilePath, bool $useCache = false): null|array
     {
         if (!$fullFilePath)
             return [];
@@ -132,7 +130,7 @@ class File
             'json' => Json::parseFile($fullFilePath),
             'yml', 'yaml' => Yaml::parseFile($fullFilePath),
             'txt' => [static::read($fullFilePath)],
-            default => throw new \Exception("File extension: $extension is not supported", 400),
+            default => null,
         };
 
         if ($useCache)
