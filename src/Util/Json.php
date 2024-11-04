@@ -8,21 +8,18 @@ use Projom\Util\File;
 
 class Json
 {
-    public static function parseFile(string $fullFilePath): array
+    public static function parseFile(string $fullFilePath): null|array
     {
         if (!$fullFilePath)
-            return [];
+            return null;
 
         if (!$json = File::read($fullFilePath))
-            return [];
+            return null;
 
-        if (!$decoded = static::verifyAndDecode($json))
-            return [];
-
-        return $decoded;
+        return static::verifyAndDecode($json);
     }
 
-    public static function verifyAndDecode(string $jsonString, bool $asArray = true): null|array 
+    public static function verifyAndDecode(string $jsonString, bool $asArray = true): null|array
     {
         if (!$jsonString)
             return null;
@@ -39,11 +36,8 @@ class Json
         if (!$jsonString)
             return null;
 
-        $result = json_decode($jsonString, $asArray);
-        if ($result === null)
-            return null;
-
-        return $result;
+        $decoded = json_decode($jsonString, $asArray);
+        return $decoded;
     }
 
     public static function verify(string $jsonString): bool

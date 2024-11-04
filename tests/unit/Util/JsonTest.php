@@ -17,11 +17,11 @@ class JsonTest extends TestCase
 		return [
 			[
 				'fullFilePath' => '',
-				'expected' => []
+				'expected' => null
 			],
 			[
 				'fullFilePath' => __DIR__ . '/test_files/empty_text_file.txt',
-				'expected' => []
+				'expected' => null
 			],
 			[
 				'fullFilePath' => __DIR__ . '/test_files/empty_json_file.json',
@@ -38,7 +38,7 @@ class JsonTest extends TestCase
 
 	#[Test]
 	#[DataProvider('parseFileProvider')]
-	public function parseFile(string $fullFilePath, array $expected): void
+	public function parseFile(string $fullFilePath, null|array $expected): void
 	{
 		$actual = Json::parseFile($fullFilePath);
 		$this->assertEquals($expected, $actual);
