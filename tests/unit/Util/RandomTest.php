@@ -26,7 +26,7 @@ class RandomTest extends TestCase
                 'expectedLength' => 5
             ],
             [
-                'length' => 0,
+                'length' => null,
                 'bytes' => 10,
                 'expectedLength' => 20 // Hex string will have 2 characters per byte
             ],
@@ -40,7 +40,7 @@ class RandomTest extends TestCase
 
     #[Test]
     #[DataProvider('stringProvider')]
-    public function string(int $length, int $bytes, int $expectedLength): void
+    public function string(null|int $length, int $bytes, int $expectedLength): void
     {
         $string = Random::string($length, $bytes);
         $actual = strlen($string);

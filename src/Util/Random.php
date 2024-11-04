@@ -6,10 +6,10 @@ namespace Projom\Util;
 
 class Random
 {
-    public static function string(int $length = 0, int $bytes = 10): string
+    public static function string(null|int $length = null, int $bytes = 10): string
     {
         $hex = bin2hex(random_bytes($bytes));
-        if ($length === 0)
+        if ($length === null)
             return $hex;
 
         return substr($hex, 0, $length);
