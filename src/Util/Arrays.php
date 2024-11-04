@@ -32,4 +32,9 @@ class Arrays
 	{
 		return array_filter($list);
 	}
+
+	public static function rekey(array $records, string $field): array
+	{
+		return array_column($records, null, $field);
+	}
 }
