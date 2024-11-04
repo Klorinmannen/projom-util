@@ -45,13 +45,8 @@ class Dir
     {
         if (!$fullDirPath)
             return false;
-
-        if (!is_dir($fullDirPath))
-            return false;
-
         if (!is_readable($fullDirPath))
             return false;
-
         return true;
     }
 
