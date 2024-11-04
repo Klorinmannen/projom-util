@@ -21,42 +21,41 @@ class Regex
     public static function matchInteger(int $subject): bool
     {
         $pattern = static::INT_PATTERN;
-        $match = preg_match($pattern, (string) $subject) === 1;
+        $match = static::match($pattern, (string) $subject);
         return $match;
     }
 
     public static function matchID(int $subject): bool
     {
         $pattern = static::ID_PATTERN;
-        $match = preg_match($pattern, (string) $subject) === 1;
+        $match = static::match($pattern, (string) $subject);
         return $match;
-    }
-
-    public static function sanitize(string $subject): string
-    {
-        $pattern = static::SANTIZE_PATTERN;
-        return preg_replace($pattern, '', $subject);
     }
 
     public static function matchText(string $subject): bool
     {
         $pattern = static::TEXT_PATTERN;
-        $match = preg_match($pattern, $subject) === 1;
+        $match = static::match($pattern, $subject);
         return $match;
     }
 
     public static function matchQuery(string $subject): bool
     {
         $pattern = static::QUERY_PATTERN;
-        $match = preg_match($pattern, $subject) === 1;
+        $match = static::match($pattern, $subject);
         return $match;
     }
 
     public static function matchFloat(float $subject): bool
     {
         $pattern = static::FLOAT_PATTERN;
-        $match = preg_match($pattern, (string) $subject) === 1;
+        $match = static::match($pattern, (string) $subject);
         return $match;
+    }
+
+    public static function match(string $pattern, string $subject): bool
+    {
+        return preg_match($pattern, $subject) === 1;
     }
 
     public static function pattern(string $pattern, string $subject): array
@@ -64,5 +63,11 @@ class Regex
         if (preg_match($pattern, $subject, $matches) === 1)
             return $matches;
         return [];
+    }
+
+    public static function sanitize(string $subject): string
+    {
+        $pattern = static::SANTIZE_PATTERN;
+        return preg_replace($pattern, '', $subject);
     }
 }
