@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Projom\Util;
 
 use Projom\Util\File;
-use SebastianBergmann\Type\NullType;
 
 class Json
 {
