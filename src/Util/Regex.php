@@ -20,36 +20,31 @@ class Regex
 
     public static function matchInteger(int $subject): bool
     {
-        $pattern = static::INT_PATTERN;
-        $match = static::match($pattern, (string) $subject);
+        $match = static::match(static::INT_PATTERN, (string) $subject);
         return $match;
     }
 
     public static function matchID(int $subject): bool
     {
-        $pattern = static::ID_PATTERN;
-        $match = static::match($pattern, (string) $subject);
+        $match = static::match(static::ID_PATTERN, (string) $subject);
         return $match;
     }
 
     public static function matchText(string $subject): bool
     {
-        $pattern = static::TEXT_PATTERN;
-        $match = static::match($pattern, $subject);
+        $match = static::match(static::TEXT_PATTERN, $subject);
         return $match;
     }
 
     public static function matchQuery(string $subject): bool
     {
-        $pattern = static::QUERY_PATTERN;
-        $match = static::match($pattern, $subject);
+        $match = static::match(static::QUERY_PATTERN, $subject);
         return $match;
     }
 
     public static function matchFloat(float $subject): bool
     {
-        $pattern = static::FLOAT_PATTERN;
-        $match = static::match($pattern, (string) $subject);
+        $match = static::match(static::FLOAT_PATTERN, (string) $subject);
         return $match;
     }
 
@@ -67,7 +62,7 @@ class Regex
 
     public static function sanitize(string $subject): string
     {
-        $pattern = static::SANTIZE_PATTERN;
-        return preg_replace($pattern, '', $subject);
+        $sanitizedSubject = preg_replace(static::SANTIZE_PATTERN, '', $subject);
+        return $sanitizedSubject;
     }
 }
