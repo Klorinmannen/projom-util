@@ -55,6 +55,15 @@ class Dir
         return true;
     }
 
+    public static function create(string $fullDirPath, int $permission = 0777, bool $recursive = false): bool
+    {
+        if (is_dir($fullDirPath))
+            return true;
+
+        $isCreated = mkdir($fullDirPath, $permission, $recursive);
+        return $isCreated;
+    }
+
     public static function cleanFileList(array $fileList): array
     {
         $unwanted = [
