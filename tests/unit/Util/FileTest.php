@@ -56,7 +56,7 @@ class FileTest extends TestCase
 	#[DataProvider('fullNameProvider')]
 	public function fullName(string $fullFilePath, string $expected): void
 	{
-		$actual	= File::fullName($fullFilePath);
+		$actual	= File::name($fullFilePath);
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -78,7 +78,7 @@ class FileTest extends TestCase
 	#[DataProvider('nameProvider')]
 	public function names(string $fullFilePath, string $expected): void
 	{
-		$actual = File::name($fullFilePath);
+		$actual = File::filename($fullFilePath);
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -92,6 +92,22 @@ class FileTest extends TestCase
 			[
 				'fullFilePath' => '',
 				'expected' => ''
+			],
+			[
+				'fullFilePath' => 'filename.tar.gz',
+				'expected' => 'gz'
+			],
+			[
+				'fullFilePath' => 'filename',
+				'expected' => ''
+			],
+			[
+				'fullFilePath' => 'filename.',
+				'expected' => ''
+			],
+			[
+				'fullFilePath' => 'filename.yml',
+				'expected' => 'yml'
 			]
 		];
 	}
@@ -114,6 +130,22 @@ class FileTest extends TestCase
 			[
 				'fullFilePath' => '',
 				'expected' => ''
+			],
+			[
+				'fullFilePath' => 'filename.tar.gz',
+				'expected' => 'filename.tar'
+			],
+			[
+				'fullFilePath' => 'filename',
+				'expected' => 'filename'
+			],
+			[
+				'fullFilePath' => 'filename.',
+				'expected' => 'filename'
+			],
+			[
+				'fullFilePath' => 'filename.yml',
+				'expected' => 'filename'
 			]
 		];
 	}
@@ -132,54 +164,6 @@ class FileTest extends TestCase
 		$fullFilePath = __FILE__;
 		$expected = __DIR__;
 		$actual = File::directory($fullFilePath);
-		$this->assertEquals($expected, $actual);
-	}
-
-	public static function canonizeUnixPathProvider(): array
-	{
-		return [
-			[
-				'fullPath' => 'some/file/path/file.php',
-				'expected' => 'some/file/path/file'
-			],
-			[
-				'fullPath' => 'some\file\path\file.php',
-				'expected' => 'some/file/path/file'
-			]
-		];
-	}
-
-	#[Test]
-	#[DataProvider('canonizeUnixPathProvider')]
-	public function canonizeUnixPath(string $fullPath, string $expected): void
-	{
-		$actual = File::canonizeUnixPath($fullPath);
-		$this->assertEquals($expected, $actual);
-	}
-
-	public static function normalizeUnixPathProvider(): array
-	{
-		return [
-			'windows path' => [
-				'fullPath' => 'some\file\path',
-				'expected' => 'some/file/path'
-			],
-			'unix path' => [
-				'fullPath' => 'some/file/path',
-				'expected' => 'some/file/path'
-			],
-			'empty path' => [
-				'fullPath' => '',
-				'expected' => ''
-			]
-		];
-	}
-
-	#[Test]
-	#[DataProvider('normalizeUnixPathProvider')]
-	public function normalizeUnixPath(string $fullPath, $expected): void
-	{
-		$actual = File::normalizeUnixPath($fullPath);
 		$this->assertEquals($expected, $actual);
 	}
 

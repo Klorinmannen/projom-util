@@ -14,14 +14,16 @@ class File
 
     public static function create(string $fullFilePath): bool
     {
-        $dir = static::directory($fullFilePath);
-        if (!Dir::create($dir, permission: 0766, recursive: true))
+        // If the path is pointing at a directory, cant do much.
+        if (is_dir($fullFilePath))
             return false;
 
-        if (is_file($fullFilePath))
+        // If file already exists, no need to create.
+        if (file_exists($fullFilePath))
             return true;
 
-        return touch($fullFilePath);
+        $isCreated = touch($fullFilePath);
+        return $isCreated;
     }
 
     public static function write(string $fullFilePath, mixed $data, int $flags = LOCK_EX): bool
@@ -29,28 +31,32 @@ class File
         if (!static::isWriteable($fullFilePath))
             return false;
 
-        file_put_contents($fullFilePath, $data, $flags);
+        $result = file_put_contents($fullFilePath, $data, $flags);
+        if ($result === false)
+            return false;
+
+        return true;
+    }
+
+    public static function writeAppend(string $fullFilePath, mixed $data): bool
+    {
+        if (!static::isWriteable($fullFilePath))
+            return false;
+
+        $result = file_put_contents($fullFilePath, $data, LOCK_EX | FILE_APPEND);
+        if ($result === false)
+            return false;
 
         return true;
     }
 
     public static function isWriteable(string $fullFilePath): bool
     {
-        $dir = dirname($fullFilePath);
-        if (!is_dir($dir))
+        if (!is_file($fullFilePath))
             return false;
 
-        return is_writeable($dir);
-    }
-
-    public static function writeAppend(string $fullFilePath, mixed $data): bool
-    {
-        if (!static::isReadable($fullFilePath))
-            return false;
-
-        file_put_contents($fullFilePath, $data, LOCK_EX | FILE_APPEND);
-
-        return true;
+        $isWriteable = is_writeable($fullFilePath);
+        return $isWriteable;
     }
 
     public static function read(string $fullFilePath): null|string
@@ -58,47 +64,11 @@ class File
         if (!static::isReadable($fullFilePath))
             return null;
 
-        return file_get_contents($fullFilePath);
-    }
+        $contents = file_get_contents($fullFilePath);
+        if ($contents === false)
+            return null;
 
-    public static function isReadable(string $fullFilePath): bool
-    {
-        if (!is_file($fullFilePath))
-            return false;
-        if (!is_readable($fullFilePath))
-            return false;
-        return true;
-    }
-
-    public static function fullname(string $fullFilePath): string
-    {
-        $baseName = pathinfo($fullFilePath, PATHINFO_BASENAME);
-        return $baseName;
-    }
-
-    public static function name(string $fullFilePath): string
-    {
-        $fileName = pathinfo($fullFilePath, PATHINFO_FILENAME);
-        return $fileName;
-    }
-
-    public static function extension(string $fullFilePath): string
-    {
-        $extension = pathinfo($fullFilePath, PATHINFO_EXTENSION);
-        return $extension;
-    }
-
-    public static function removeExtension(string $fullFilePath): string
-    {
-        $extension = pathinfo($fullFilePath, PATHINFO_EXTENSION);
-        $fileName = str_replace('.' . $extension, '', $fullFilePath);
-        return $fileName;
-    }
-
-    public static function directory(string $fullFilePath): string
-    {
-        $directory = dirname($fullFilePath);
-        return $directory;
+        return $contents;
     }
 
     public static function move(string $from, string $to): bool
@@ -114,16 +84,46 @@ class File
         return $isMoved;
     }
 
-    public static function canonizeUnixPath(string $fullPath): string
+    public static function isReadable(string $fullFilePath): bool
     {
-        $fullPath = File::normalizeUnixPath($fullPath);
-        $fullPath = File::removeExtension($fullPath);
-        return $fullPath;
+        if (!$fullFilePath)
+            return false;
+        if (!is_file($fullFilePath))
+            return false;
+        if (!is_readable($fullFilePath))
+            return false;
+        return true;
     }
 
-    public static function normalizeUnixPath(string $fullPath)
+    public static function name(string $fullFilePath): string
     {
-        return str_replace('\\', '/', $fullPath);
+        $fileName = pathinfo($fullFilePath, PATHINFO_BASENAME);
+        return $fileName;
+    }
+
+    public static function filename(string $fullFilePath): string
+    {
+        $fileName = pathinfo($fullFilePath, PATHINFO_FILENAME);
+        return $fileName;
+    }
+
+    public static function extension(string $fullFilePath): string
+    {
+        $extension = pathinfo($fullFilePath, PATHINFO_EXTENSION);
+        return $extension;
+    }
+
+    public static function removeExtension(string $name): string
+    {
+        $extension = static::extension($name);
+        $fileName = str_replace('.' . $extension, '', $name);
+        return $fileName;
+    }
+
+    public static function directory(string $fullFilePath): string
+    {
+        $directory = dirname($fullFilePath);
+        return $directory;
     }
 
     public static function parse(string $fullFilePath, bool $useCache = false): null|array
@@ -135,8 +135,8 @@ class File
             if ($cachedFile = static::$cache[$fullFilePath] ?? false)
                 return $cachedFile;
 
-        $fileNameExt = File::fullName($fullFilePath);
-        $extension = File::extension($fileNameExt);
+        $filename = File::name($fullFilePath);
+        $extension = File::extension($filename);
 
         $parsedFile = match ($extension) {
             'json' => Json::parseFile($fullFilePath),
@@ -162,7 +162,7 @@ class File
                 continue;
 
             $fileData = static::parse($fullFilePath, $useCache);
-            $fileName = static::name($fullFilePath);
+            $fileName = static::filename($fullFilePath);
             $parsedFileList[$fileName] = $fileData;
         }
 
