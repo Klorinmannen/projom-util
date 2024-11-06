@@ -107,7 +107,7 @@ class ArraysTest extends TestCase
 		return [
 			[
 				'list' => ['a', '', 'b', ''],
-				'expected' => [ 0 => 'a', 2 => 'b']
+				'expected' => [0 => 'a', 2 => 'b']
 			],
 			[
 				'list' => [],
@@ -121,6 +121,47 @@ class ArraysTest extends TestCase
 	public function removeEmpty(array $list, array $expected): void
 	{
 		$actual = Arrays::removeEmpty($list);
+		$this->assertEquals($expected, $actual);
+	}
+
+	public static function rekeyProvider(): array
+	{
+		return [
+			[
+				'records' => [
+					['id' => 1, 'name' => 'Alice'],
+					['id' => 2, 'name' => 'Bob']
+				],
+				'field' => 'id',
+				'expected' => [
+					1 => ['id' => 1, 'name' => 'Alice'],
+					2 => ['id' => 2, 'name' => 'Bob']
+				]
+			],
+			[
+				'records' => [],
+				'field' => 'id',
+				'expected' => []
+			],
+			[
+				'records' => [
+					['id' => 1, 'name' => 'Alice'],
+					['id' => 2, 'name' => 'Bob']
+				],
+				'field' => 'dummy',
+				'expected' => [
+					['id' => 1, 'name' => 'Alice'],
+					['id' => 2, 'name' => 'Bob']
+				]
+			]
+		];
+	}
+
+	#[Test]
+	#[DataProvider('rekeyProvider')]
+	public function rekey(array $records, string $field, array $expected): void
+	{
+		$actual = Arrays::rekey($records, $field);
 		$this->assertEquals($expected, $actual);
 	}
 }
