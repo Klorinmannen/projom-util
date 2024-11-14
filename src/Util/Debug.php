@@ -9,7 +9,7 @@ class Debug
     public static function sql(string $sql, string $lb = "\n"): string
     {
         $output = preg_split(
-            '/(SELECT|FROM|WHERE|INSERT INTO|VALUES|INNER JOIN|ON|LEFT JOIN|RIGHT JOIN)/',
+            '/(SELECT|UPDATE|INSERT INTO|VALUES|INNER JOIN|LEFT JOIN|RIGHT JOIN|STRAIGHT JOIN|ON|FROM|WHERE)/',
             $sql,
             -1,
             \PREG_SPLIT_NO_EMPTY | \PREG_SPLIT_DELIM_CAPTURE
