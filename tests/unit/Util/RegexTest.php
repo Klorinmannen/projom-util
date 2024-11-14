@@ -12,113 +12,295 @@ use Projom\Util\Regex;
 
 class RegexTest extends TestCase
 {
-	public static function matchIntegerProvider(): array
-	{
-		return [
-			[
-				'subject' => 5,
-				'expected' => true
-			],
-			[
-				'subject' => -5,
-				'expected' => true
-			],
-			[
-				'subject' => 0,
-				'expected' => true
-			],
-			[
-				'subject' => 999,
-				'expected' => true
-			],
-			[
-				'subject' => -999,
-				'expected' => true
-			]
-		];
-	}
-
-	#[Test]
-	#[DataProvider('matchIntegerProvider')]
-	public function matchInteger(int $subject, bool $expected): void
-	{
-		$actual = Regex::matchInteger($subject);
-		$this->assertEquals($expected, $actual);
-	}
-
-	public static function matchIDProvider(): array
-	{
-		return [
-			[
-				'subject' => 5,
-				'expected' => true
-			],
-			[
-				'subject' => -5,
-				'expected' => false
-			],
-			[
-				'subject' => 0,
-				'expected' => false
-			],
-			[
-				'subject' => 999,
-				'expected' => true
-			],
-			[
-				'subject' => -999,
-				'expected' => false
-			]
-		];
-	}
-
-	#[Test]
-	#[DataProvider('matchIDProvider')]
-	public function matchID(int $subject, bool $expected): void
-	{
-		$actual = Regex::matchID($subject);
-		$this->assertEquals($expected, $actual);
-	}
-
 	public static function matchFloatProvider(): array
 	{
 		return [
 			[
-				'subject' => 1,
-				'expected' => true
-			],
-			[
-				'subject' => 1.2,
-				'expected' => true
-			],
-			[
-				'subject' => 1.2,
-				'expected' => true
-			],
-			[
-				'subject' => 1001,
-				'expected' => true
-			],
-			[
-				'subject' => 1001.1001,
-				'expected' => true
-			],
-			[
 				'subject' => 0,
+				'expected' => false
+			],
+			[
+				'subject' => -0,
+				'expected' => false
+			],
+			[
+				'subject' => '0.0',
+				'expected' => true
+			],
+			[
+				'subject' => 1.2,
+				'expected' => true
+			],
+			[
+				'subject' => 1.2,
+				'expected' => true
+			],
+			[
+				'subject' => +1001.1001,
 				'expected' => true
 			],
 			[
 				'subject' => -1001.1001,
 				'expected' => true
+			],
+			[
+				'subject' => 'text',
+				'expected' => false
 			]
 		];
 	}
 
 	#[Test]
 	#[DataProvider('matchFloatProvider')]
-	public function matchFloat(float $subject, bool $expected): void
+	public function matchFloat(int|float|string $subject, bool $expected): void
 	{
 		$actual = Regex::matchFloat($subject);
+		$this->assertEquals($expected, $actual);
+	}
+
+	public static function matchNumberProvider(): array
+	{
+		return [
+			[
+				'subject' => 0,
+				'expected' => true
+			],
+			[
+				'subject' => -0,
+				'expected' => true
+			],
+			[
+				'subject' => '0.0',
+				'expected' => true
+			],
+			[
+				'subject' => 1.2,
+				'expected' => true
+			],
+			[
+				'subject' => 1,
+				'expected' => true
+			],
+			[
+				'subject' => +1001.1001,
+				'expected' => true
+			],
+			[
+				'subject' => '11,11',
+				'expected' => true
+			],
+			[
+				'subject' => -1001,
+				'expected' => true
+			],
+			[
+				'subject' => 'text',
+				'expected' => false
+			],
+			[
+				'subject' => 'text 123',
+				'expected' => false
+			]
+		];
+	}
+
+	#[Test]
+	#[DataProvider('matchNumberProvider')]
+	public function matchNumber(int|float|string $subject, bool $expected): void
+	{
+		$actual = Regex::matchNumber($subject);
+		$this->assertEquals($expected, $actual);
+	}
+
+	public static function matchIntegerProvider(): array
+	{
+		return [
+			[
+				'subject' => 0,
+				'expected' => true
+			],
+			[
+				'subject' => -0,
+				'expected' => true
+			],
+			[
+				'subject' => 5,
+				'expected' => true
+			],
+			[
+				'subject' => -5,
+				'expected' => true
+			],
+			[
+				'subject' => '999',
+				'expected' => true
+			],
+			[
+				'subject' => -999,
+				'expected' => true
+			],
+			[
+				'subject' => -9.99,
+				'expected' => false
+			],
+			[
+				'subject' => 'text',
+				'expected' => false
+			]
+		];
+	}
+
+	#[Test]
+	#[DataProvider('matchIntegerProvider')]
+	public function matchInteger(int|float|string $subject, bool $expected): void
+	{
+		$actual = Regex::matchInteger($subject);
+		$this->assertEquals($expected, $actual);
+	}
+
+	public static function matchPositiveIntegerProvider(): array
+	{
+		return [
+			[
+				'subject' => 0,
+				'expected' => true
+			],
+			[
+				'subject' => '-0',
+				'expected' => false
+			],
+			[
+				'subject' => 5,
+				'expected' => true
+			],
+			[
+				'subject' => -5,
+				'expected' => false
+			],
+			[
+				'subject' => 999,
+				'expected' => true
+			],
+			[
+				'subject' => -999,
+				'expected' => false
+			],
+			[
+				'subject' => -9.99,
+				'expected' => false
+			],
+			[
+				'subject' => '9,99',
+				'expected' => false
+			],
+			[
+				'subject' => 'text',
+				'expected' => false
+			]
+		];
+	}
+
+	#[Test]
+	#[DataProvider('matchPositiveIntegerProvider')]
+	public function matchPositiveInteger(int|float|string $subject, bool $expected): void
+	{
+		$actual = Regex::matchPositiveInteger($subject);
+		$this->assertEquals($expected, $actual);
+	}
+
+	public static function matchNegativeIntegerProvider(): array
+	{
+		return [
+			[
+				'subject' => '-0',
+				'expected' => true
+			],
+			[
+				'subject' => 0,
+				'expected' => false
+			],
+			[
+				'subject' => 5,
+				'expected' => false
+			],
+			[
+				'subject' => -5,
+				'expected' => true
+			],
+			[
+				'subject' => 999,
+				'expected' => false
+			],
+			[
+				'subject' => -999,
+				'expected' => true
+			],
+			[
+				'subject' => -9.99,
+				'expected' => false
+			],
+			[
+				'subject' => '9,99',
+				'expected' => false
+			],
+			[
+				'subject' => 'text',
+				'expected' => false
+			]
+		];
+	}
+
+	#[Test]
+	#[DataProvider('matchNegativeIntegerProvider')]
+	public function matchNegativeInteger(int|float|string $subject, bool $expected): void
+	{
+		$actual = Regex::matchNegativeInteger($subject);
+		$this->assertEquals($expected, $actual);
+	}
+
+	public static function matchIntegerIDProvider(): array
+	{
+		return [
+			[
+				'subject' => 5,
+				'expected' => true
+			],
+			[
+				'subject' => -5,
+				'expected' => false
+			],
+			[
+				'subject' => 0,
+				'expected' => false
+			],
+			[
+				'subject' => 999,
+				'expected' => true
+			],
+			[
+				'subject' => -999,
+				'expected' => false
+			],
+			[
+				'subject' => -9.99,
+				'expected' => false
+			],
+			[
+				'subject' => '9,99',
+				'expected' => false
+			],
+			[
+				'subject' => 'text',
+				'expected' => false
+			]
+		];
+	}
+
+	#[Test]
+	#[DataProvider('matchIntegerIDProvider')]
+	public function matchIntegerID(int|float|string $subject, bool $expected): void
+	{
+		$actual = Regex::matchIntegerID($subject);
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -206,5 +388,42 @@ class RegexTest extends TestCase
 	{
 		$actual = Regex::matchQuery($subject);
 		$this->assertEquals($expected, $actual);
+	}
+
+	public static function patternProvider(): array
+	{
+		return [
+			[
+				'pattern' => '/^[\w\/\.?=&]+$/',
+				'subject' => 'test/query?param=value',
+				'expected' => true
+			],
+			[
+				'pattern' => '/^[\w\/\.?=&]+$/',
+				'subject' => 'test/query?param=value&key=value',
+				'expected' => true
+			],
+			[
+				'pattern' => '/^[\w\/\.?=&]+$/',
+				'subject' => 'not valid',
+				'expected' => false
+			],
+			[
+				'pattern' => '/^[\w\/\.?=&]+$/',
+				'subject' => '',
+				'expected' => false
+			]
+		];
+	}
+
+	#[Test]
+	#[DataProvider('patternProvider')]
+	public function pattern(string $pattern, string $subject, bool $expected): void
+	{
+		$actual = Regex::pattern($pattern, $subject);
+		if ($expected)
+			$this->assertIsArray($actual);
+		else
+			$this->assertNull($actual);
 	}
 }

@@ -24,7 +24,7 @@ class ValidateTest extends TestCase
 				'expected' => true
 			],
 			[
-				'float' => 0.0,
+				'float' => '0.0',
 				'expected' => true
 			]
 		];
@@ -32,7 +32,7 @@ class ValidateTest extends TestCase
 
 	#[Test]
 	#[DataProvider('floatProvider')]
-	public function float(float $float, bool $expected): void
+	public function float(int|float|string $float, bool $expected): void
 	{
 		$actual = Validate::float($float);
 		$this->assertEquals($expected, $actual);
@@ -64,7 +64,7 @@ class ValidateTest extends TestCase
 		$this->assertEquals($expected, $actual);
 	}
 
-	public static function idProvider(): array
+	public static function integerIDProvider(): array
 	{
 		return [
 			[
@@ -83,14 +83,14 @@ class ValidateTest extends TestCase
 	}
 
 	#[Test]
-	#[DataProvider('idProvider')]
-	public function id(int $id, bool $expected): void
+	#[DataProvider('integerIDProvider')]
+	public function integerID(int $id, bool $expected): void
 	{
-		$actual = Validate::id($id);
+		$actual = Validate::integerID($id);
 		$this->assertEquals($expected, $actual);
 	}
 
-	public static function textStringProvider(): array
+	public static function textProvider(): array
 	{
 		return [
 			[
@@ -121,14 +121,14 @@ class ValidateTest extends TestCase
 	}
 
 	#[Test]
-	#[DataProvider('textStringProvider')]
-	public function textString(string $string, bool $expected): void
+	#[DataProvider('textProvider')]
+	public function text(string $string, bool $expected): void
 	{
-		$actual = Validate::textString($string);
+		$actual = Validate::text($string);
 		$this->assertEquals($expected, $actual);
 	}
 
-	public static function queryStringProvider(): array
+	public static function queryProvider(): array
 	{
 		return [
 			[
@@ -143,10 +143,10 @@ class ValidateTest extends TestCase
 	}
 
 	#[Test]
-	#[DataProvider('queryStringProvider')]
-	public function test_query(string $query, bool $expected): void
+	#[DataProvider('queryProvider')]
+	public function query(string $query, bool $expected): void
 	{
-		$actual = Validate::queryString($query);
+		$actual = Validate::query($query);
 		$this->assertEquals($expected, $actual);
 	}
 }

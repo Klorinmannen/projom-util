@@ -1,12 +1,12 @@
 
 
 Code Coverage Report:      
-  2024-11-06 16:01:47      
+  2024-11-14 12:32:04      
                            
  Summary:                  
-  Classes: 63.64% (14/22)  
-  Methods: 74.42% (64/86)  
-  Lines:   75.29% (262/348)
+  Classes: 72.73% (16/22)  
+  Methods: 78.65% (70/89)  
+  Lines:   80.51% (285/354)
 
 Projom\Util\Arrays
   Methods: 100.00% ( 6/ 6)   Lines: 100.00% (  6/  6)
@@ -20,6 +20,8 @@ Projom\Util\File
   Methods:  42.86% ( 6/14)   Lines:  56.41% ( 44/ 78)
 Projom\Util\Floats
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  2/  2)
+Projom\Util\Format
+  Methods: 100.00% ( 2/ 2)   Lines: 100.00% ( 14/ 14)
 Projom\Util\Integers
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  2/  2)
 Projom\Util\Json
@@ -33,7 +35,7 @@ Projom\Util\Path
 Projom\Util\Random
   Methods: 100.00% ( 1/ 1)   Lines: 100.00% (  4/  4)
 Projom\Util\Regex
-  Methods:  87.50% ( 7/ 8)   Lines:  81.25% ( 13/ 16)
+  Methods: 100.00% (11/11)   Lines: 100.00% ( 22/ 22)
 Projom\Util\Sql
   Methods: 100.00% ( 6/ 6)   Lines: 100.00% (  9/  9)
 Projom\Util\Strings
