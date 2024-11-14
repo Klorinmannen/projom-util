@@ -25,10 +25,10 @@ class Path
 		if (!$fullFilePath)
 			return null;
 
-		$fullPath = realpath($fullFilePath);
-		if ($fullPath === false)
+		$absolutePath = realpath($fullFilePath);
+		if ($absolutePath === false)
 			return null;
 
-		return $fullPath;
+		return $absolutePath;
 	}
 }
