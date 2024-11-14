@@ -24,11 +24,12 @@ class Json
         if (!$jsonString)
             return null;
 
-        $result = static::verify($jsonString);
-        if ($result === false)
+        $decoded = static::decode($jsonString, $asArray);
+
+        if (json_last_error() !== JSON_ERROR_NONE)
             return null;
 
-        return static::decode($jsonString, $asArray);
+        return $decoded;
     }
 
     public static function decode(string $jsonString, bool $asArray = true): null|array
