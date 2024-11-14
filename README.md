@@ -18,4 +18,5 @@ composer require klorinmannen/projom-util
 ````
 
 ### Docs
-Visit the project [documentation](https://projom.se/docs/projom-util/) pages or the repository [wiki](https://github.com/Klorinmannen/projom-util/wiki) pages.
+Visit the project API [documentation](https://projom.se/docs/projom-util-phpdoc/) pages.
+<br>Unit test [coverage](https://projom.se/docs/projom-util-phpunit/)
