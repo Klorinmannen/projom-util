@@ -14,7 +14,7 @@
          displayDetailsOnTestsThatTriggerNotices="true"
          displayDetailsOnTestsThatTriggerWarnings="true">
     <testsuites>
-        <testsuite name="Projom core test suite">
+        <testsuite name="unit">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
