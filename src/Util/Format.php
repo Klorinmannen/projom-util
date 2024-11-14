@@ -30,8 +30,8 @@ class Format
 	public static function values(array $values): array
 	{
 		$formatted = [];
-		foreach ($values as $type => $value)
-			$formatted = static::value($value, $type);
+		foreach ($values as $index => [$type, $value])
+			$formatted[$index] = static::value($value, $type);
 		return $formatted;
 	}
 }
