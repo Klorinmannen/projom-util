@@ -6,8 +6,8 @@ namespace Projom\Util;
 
 class Bools
 {
-    const TRUE = 'true';
-    const FALSE = 'false';
+    private const TRUE = 'true';
+    private const FALSE = 'false';
 
     public static function toBoolean(string $boolString): ?bool
     {
