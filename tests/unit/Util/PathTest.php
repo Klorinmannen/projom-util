@@ -71,8 +71,8 @@ class PathTest extends TestCase
 				'expected' => null
 			],
 			[
-				'fullFilePath' => __DIR__ . '/../../../test/test.php',
-				'expected' => realpath(__DIR__ . '/../../../test/test.php')
+				'fullFilePath' => __DIR__ . '/../../../src/Util/Path.php',
+				'expected' => realpath(__DIR__ . '/../../../src/Util/Path.php')
 			],
 			[
 				'fullFilePath' => '../../../test/test.php',
