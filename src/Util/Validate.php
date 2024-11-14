@@ -8,25 +8,25 @@ use Projom\Util\Regex;
 
 class Validate
 {
-    public static function float(float $float): bool
+    public static function float(int|float|string $float): bool
     {
         return Regex::matchFloat($float);
     }
 
-    public static function int(int $int): bool
+    public static function int(int|float|string $int): bool
     {
         return Regex::matchInteger($int);
     }
 
-    public static function id(int $id): bool
+    public static function integerID(int|float|string $id): bool
     {
         if ($id <= 0)
             return false;
 
-        return Regex::matchID($id);
+        return Regex::matchIntegerID($id);
     }
 
-    public static function textString(string $string): bool
+    public static function text(string $string): bool
     {
         if ($string === '')
             return true;
@@ -34,7 +34,7 @@ class Validate
         return Regex::matchText($string);
     }
 
-    public static function queryString(string $query): bool
+    public static function query(string $query): bool
     {
         if ($query === '')
             return false;
