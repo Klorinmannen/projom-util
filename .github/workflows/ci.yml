@@ -28,10 +28,20 @@ jobs:
         run: composer install --no-interaction --no-progress
 
       - name: Run coverage report
-        run: ./vendor/bin/phpunit --coverage-text="phpunit_coverage.txt"
+        run: ./vendor/bin/phpunit --coverage-text="phpunit_coverage.txt" --coverage-html="coverage_html"
 
-      - name: Coverage summary
+      - name: Send coverage text to step summary
         run: cat phpunit_coverage.txt >> $GITHUB_STEP_SUMMARY
+
+      - name: Create archive for coverage html
+        run: tar -czvf coverage_html.tar.gz coverage_html
+
+      - name: Upload coverage html archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html
+          overwrite: true
+          path: ./coverage_html.tar.gz
 
   psalm-security-scan:
     name: Psalm static security analysis on ubuntu-latest
